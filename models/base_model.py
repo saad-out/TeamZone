@@ -1,5 +1,9 @@
 #!/usr/bin/python3
-"""BaseModel Representation"""
+"""
+BaseModel representation.
+
+This class represents the base model class from which other classes will inherit from.
+"""
 
 from datetime import datetime
 import models
@@ -12,7 +16,20 @@ time = "%Y-%m-%dT%H:%M:%S.%f"
 Base = declarative_base()
 
 class BaseModel:
-    """The base model class from which other classes will inherit from"""
+    """
+    Attributes:
+        id (sqlalchemy.Column): The ID of the object. It's a primary key with a max length of 60 characters.
+        created_at (sqlalchemy.Column): The date and time the object was created. Default value is the current date and time.
+        updated_at (sqlalchemy.Column): The date and time the object was last updated. Default value is the current date and time.
+
+    Methods:
+        init(self, *args, **kwargs): Initializes the base model class.
+        str(self): Returns a string representation of the object.
+        to_dict(self): Returns a dictionary representation of the object.
+        save(self): Saves the object to the database.
+        delete(self): Deletes the object from the database.
+
+    """
     id = Column(String(60), primary_key=True)
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now)
