@@ -22,7 +22,7 @@ classes = {
 }
 
 class Storage:
-     """
+    """
     The Database Storage class, responsible for managing the application's data.
 
     Attributes:

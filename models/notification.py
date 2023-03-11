@@ -5,7 +5,7 @@ from sqlalchemy import Column, String, ForeignKey, Boolean, Text
 from sqlalchemy.orm import relationship
 
 class Notification(BaseModel, Base):
-     """Class representing a Notification object.
+    """Class representing a Notification object.
 
     Attributes:
         __tablename__ (str): The name of the table in the database where Notification objects are stored.
