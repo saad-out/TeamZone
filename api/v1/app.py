@@ -23,10 +23,10 @@ To start the application, simply run this module directly:
 
 The application will be available at http://localhost:5001/.
 """
+from api.v1.views import app_views
+
 from flask import Flask, jsonify
 from flask_cors import CORS
-
-from api.v1.views import app_views
 
 
 app = Flask(__name__)

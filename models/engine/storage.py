@@ -1,4 +1,10 @@
-import models
+"""
+Storage representation.
+
+This class represents the storage class which provides methods to interact with
+the database.
+"""
+
 from models.base_model import Base, BaseModel
 from models.country import Country
 from models.city import City
@@ -129,12 +135,14 @@ class Storage:
         Returns the number of objects of a given class.
         If no class is provided, it returns the total number of objects.
         """
+        from models import storage
+        
         clses = classes.values()
         if not cls:
             count = 0
             for clas in clses:
-                count += len(model.storage.all(clas).values())
+                count += len(storage.all(clas).values())
         else:
-            count = len(model.storage.all(cls).values())
+            count = len(storage.all(cls).values())
 
         return count
