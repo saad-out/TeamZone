@@ -40,7 +40,10 @@ class BaseModel:
 
     def __str__(self):
         """String representation"""
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        obj_dict = self.__dict__
+        if "_sa_instance_state" in obj_dict:
+            del obj_dict["_sa_instance_state"]
+        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, obj_dict)
 
     def to_dict(self):
         """Returns a dictionary of the instance"""
@@ -49,6 +52,8 @@ class BaseModel:
             new_dict["created_at"] = new_dict["created_at"].strftime(time)
         if "updated_at" in new_dict:
             new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
+        if "_sa_instance_state" in new_dict:
+            del new_dict["_sa_instance_state"]
 
         new_dict["__class__"] = self.__class__.__name__
 

@@ -20,5 +20,6 @@ http://flask.palletsprojects.com/en/2.1.x/blueprints/
 """
 from flask import Blueprint
 
-
 app_views = Blueprint("app_views", __name__, url_prefix="/api/v1")
+
+from api.v1.views.teams import *
