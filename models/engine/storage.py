@@ -22,27 +22,45 @@ classes = {
 }
 
 class Storage:
-    """The Database Storage"""
+    """
+    The Database Storage class, responsible for managing the application's data.
+
+    Attributes:
+        __engine: An SQLAlchemy engine instance that connects to the database.
+        __session: An SQLAlchemy session instance that provides an interface to the database.
+    """
     __engine = None
     __session = None
 
     def __init__(self):
         """Initialize the storage object"""
+        # Get environment variables
         TZ_MYSQL_USER = getenv('TZ_MYSQL_USER')
         TZ_MYSQL_PWD = getenv('TZ_MYSQL_PWD')
         TZ_MYSQL_HOST = getenv('TZ_MYSQL_HOST')
         TZ_MYSQL_DB = getenv('TZ_MYSQL_DB')
         TZ_ENV = getenv('TZ_ENV')
+
+        # Create SQLAlchemy engine instance
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
                                       format(TZ_MYSQL_USER,
                                              TZ_MYSQL_PWD,
                                              TZ_MYSQL_HOST,
                                              TZ_MYSQL_DB))
+        # Drop all tables in the database if in test environment
         if TZ_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """Query the current database session"""
+        """
+        Queries the current database session.
+
+        Args:
+            cls: A class object. If given, only instances of that class are returned.
+
+        Returns:
+            A dictionary of instances, with their keys in the format <classname>.<instance id>.
+        """
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
@@ -53,31 +71,53 @@ class Storage:
         return (new_dict)
 
     def new(self, obj):
-        """Add the object to the database"""
+        """
+        Adds the given object to the database.
+
+        Args:
+            obj: An instance of a model class.
+        """
         self.__session.add(obj)
 
     def save(self):
-        """commit all changes to the database"""
+        """
+        Commits all changes to the database.
+        """
         self.__session.commit()
 
     def delete(self, obj=None):
-        """delete obj from the database"""
+        """
+        Deletes the given object from the database.
+
+        Args:
+            obj: An instance of a model class. If not given, nothing happens.
+        """
         if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):
-        """Reload the database"""
+        """
+        Reloads the database session by creating a new SQLAlchemy session instance.
+        """
+        # Create all tables if they don't exist
         Base.metadata.create_all(self.__engine)
+
+        # Create a new SQLAlchemy session instance
         session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
 
     def close(self):
-        """call remove method on the session attribute"""
+        """
+        Closes the current database session.
+        """
         self.__session.remove()
 
     def get(self, cls, id):
-        """Return the object based on the class and it id"""
+        """
+        Returns the object with the given ID of the given class.
+        If the class is not valid, it returns None.
+        """
         if cls not in classes.values():
             return None
         
@@ -85,7 +125,10 @@ class Storage:
         return obj
 
     def count(self, cls=None):
-        """count the number of objects"""
+        """
+        Returns the number of objects of a given class.
+        If no class is provided, it returns the total number of objects.
+        """
         clses = classes.values()
         if not cls:
             count = 0
