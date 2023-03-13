@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block style %} {% endblock %} {% block main %}
+<h1>THIS IS A EDIT TEAMS</h1>
+<div class="row">
+  {% for team in teams %}
+  <div class="col-lg-6">
+    <div class="card text-center">
+      <div class="card-header">{{ team.name }}</div>
+      <div class="card-body">
+        <!--<h5 class="card-title">Team bio</h5>-->
+        <div class="row">
+          <div class="col-lg-4">
+            <i class="bi bi-geo-alt-fill"></i>
+            <span>{{ team.city.name }}, {{ team.city.country.name }}</span>
+          </div>
+          <div class="col-lg-4"></div>
+          <div class="col-lg-4">
+            <i class="bi bi-trophy-fill"></i>
+            <span>{{ team.sport.name }}</span>
+          </div>
+        </div>
+        <p class="card-text">{{ team.bio }}</p>
+        <a href="/teams/{{team.id}}" class="btn btn-primary">Edit</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock main %} {% block script %} {% endblock %}
