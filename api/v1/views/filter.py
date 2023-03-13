@@ -41,9 +41,9 @@ def filter_teams():
     else:
         filter_parameters = request.get_json()
     
-    country_ids = filter_parameters.get('countries')
-    city_ids = filter_parameters.get('cities')
-    sport_ids = filter_parameters.get('sports')
+    country_ids = filter_parameters.get('countries', [])
+    city_ids = filter_parameters.get('cities', [])
+    sport_ids = filter_parameters.get('sports', [])
 
     cities = []
     for country_id in country_ids:
