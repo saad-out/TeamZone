@@ -58,8 +58,10 @@ class BaseModel:
     def __str__(self):
         """String representation"""
         obj_dict = self.__dict__
-        if "_sa_instance_state" in obj_dict:
-            del obj_dict["_sa_instance_state"]
+        for key in ["_sa_instance_state", "cities", "teams", "players",
+                    "notifications", "team_one", "team_two"]:
+            if key in obj_dict:
+                del obj_dict[key]
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id, obj_dict)
 
     def to_dict(self):
@@ -69,8 +71,10 @@ class BaseModel:
             new_dict["created_at"] = new_dict["created_at"].strftime(time)
         if "updated_at" in new_dict:
             new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
-        if "_sa_instance_state" in new_dict:
-            del new_dict["_sa_instance_state"]
+        for key in ["_sa_instance_state", "cities", "teams", "players",
+                    "notifications", "team_one", "team_two"]:
+            if key in new_dict:
+                del new_dict[key]
 
         new_dict["__class__"] = self.__class__.__name__
 
