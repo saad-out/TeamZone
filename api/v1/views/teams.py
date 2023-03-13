@@ -107,25 +107,28 @@ def users_teams(user_id, team_id=None):
         abort(404)
     if team_id:
         team = storage.get(Team, team_id)
-        if (not team) or (team.leader_id != user_id):
+        if (not team) or (team not in user.teams):
             abort(404)
     
     if request.method == 'GET':
         if team_id:
             return jsonify(team.to_dict())
         else:
-            teams = [team.to_dict() for team in storage.all(Team).values() if team.leader_id == user_id]
+            teams = [team.to_dict() for team in user.teams]
             return jsonify(teams)
     
     elif request.method == 'POST':
         if not request.is_json:
             return jsonify({"error": "Not a JSON"}), 400
         team_attributes = request.get_json()
-        for attribute in ["name", "city_id"]:
+        for attribute in ["name", "city_id", "sport_id"]:
             if attribute not in team_attributes:
                 return jsonify({"error": f"Missing {str(attribute)}"}), 400
         team_attributes["leader_id"] = str(user_id)
         new_team = Team(**team_attributes)
+        user.teams.append(new_team)
+        user.save()
+        new_team.players.append(user)
         new_team.save()
         return jsonify(new_team.to_dict()), 201
     

@@ -10,6 +10,9 @@ Routes:
 Error Handlers:
 - `404`: Handles page not found errors with a custom error page.
 
+Other:
+- `close_session`: removes the current `sqlalchemy` session after every request
+
 
 Configuration:
 The application can be configured with the following environment variables:
@@ -24,6 +27,7 @@ To start the application, simply run this module directly:
 The application will be available at http://localhost:5001/.
 """
 from api.v1.views import app_views
+from models import storage
 
 from flask import Flask, jsonify
 from flask_cors import CORS
@@ -60,6 +64,19 @@ def not_found(error):
     """
     return jsonify({"error": "Not found"}), 404
 
+@app.teardown_appcontext
+def close_session(exception):
+    """
+    Close the current SQLAlchemy session after each request.
+
+    Args:
+        exception: An optional exception that was raised during the request, if applicable.
+
+    Returns:
+        None.
+    """
+    storage.close()
+    
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001)
