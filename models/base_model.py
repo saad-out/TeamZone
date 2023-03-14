@@ -71,7 +71,7 @@ class BaseModel:
             new_dict["created_at"] = new_dict["created_at"].strftime(time)
         if "updated_at" in new_dict:
             new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
-        for key in ["_sa_instance_state", "cities", "teams", "players",
+        for key in ["_sa_instance_state", "country", "cities", "teams", "players",
                     "notifications", "team_one", "team_two"]:
             if key in new_dict:
                 del new_dict[key]
