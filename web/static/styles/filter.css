@@ -1,0 +1,79 @@
+.box {
+  padding: 10px;
+}
+
+.btn:focus {
+  box-shadow: none;
+}
+
+.box-label {
+  color: #11698e;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.box-label .btn {
+  padding: 0;
+  font-size: 0.8rem;
+}
+
+label {
+  cursor: pointer;
+}
+
+.tick {
+  display: block;
+  position: relative;
+  padding-left: 23px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.tick input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.check {
+  position: absolute;
+  top: 1px;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.tick:hover input ~ .check {
+  background-color: #f3f3f3;
+}
+
+.tick input:checked ~ .check {
+  background-color: #ffffff;
+}
+
+.check:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.tick input:checked ~ .check:after {
+  display: block;
+  transform: rotate(45deg) scale(1);
+}
+
+.tick .check:after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid rgb(0, 0, 0);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg) scale(2);
+}

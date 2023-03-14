@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% block style %} {% endblock %} {% block main %}
+<h1>THIS IS A CREATE TEAMS</h1>
+<!-- Multi Columns Form -->
+<form class="row g-3" action="#" method="post">
+  <div class="col-md-12">
+    <label for="teamname" class="form-label">Team Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="teamname"
+      value="{{ team.name }}"
+    />
+  </div>
+  <div class="col-md-12">
+    <label for="teambio" class="form-label">Team Bio</label>
+    <textarea id="teambio" class="form-control" style="height: 100px">
+{{ team.bio }}</textarea
+    >
+  </div>
+  <div class="col-md-6">
+    <label for="teamcountry" class="form-label">Country</label>
+    <select id="teamcountry" class="form-select">
+      <option selected>Choose...</option>
+      {% for country in countries %}
+      <option>{{ country.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-6">
+    <label for="teamcity" class="form-label">City</label>
+    <select id="teamcity" class="form-select">
+      <option selected>Choose...</option>
+      {% for city in cities %}
+      <option>{{ city.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-12">
+    <label for="teamsport" class="form-label">Sport</label>
+    <select id="teamsport" class="form-select">
+      <option selected>Choose...</option>
+      {% for sport in sports %}
+      <option>{{ sport.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-12">
+    <label for="teamlogo" class="col-sm-2 col-form-label">Upload Logo</label>
+    <div class="col-sm-10">
+      <input
+        class="form-control"
+        type="file"
+        id="teamlogo"
+        value="{{ team.image }}"
+      />
+    </div>
+  </div>
+  <div class="text-center">
+    <button type="submit" class="btn btn-primary">Update Team</button>
+  </div>
+</form>
+{% endblock main %} {% block script %} {% endblock %}

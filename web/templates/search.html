@@ -1,0 +1,130 @@
+{% extends "base.html" %} {% block style %}
+<link
+  href="{{ url_for('static', filename='styles/filter.css') }}"
+  rel="stylesheet"
+/>
+{% endblock %} {% block main %}
+<h1>THIS IS A SEARCH</h1>
+<div class="row">
+  <div class="col-xl-3">
+    <div class="p-2 bg-light ms-md-4 ms-sm-2 border">
+      <div class="border-bottom h5 text-uppercase">Filter By</div>
+      <div class="box border-bottom">
+        <div class="box-label text-uppercase d-flex align-items-center">
+          Country
+          <button
+            class="btn ms-auto"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#inner-box1"
+            aria-expanded="false"
+            aria-controls="inner-box"
+          >
+            <span class="bi bi-plus"></span>
+          </button>
+        </div>
+        <div id="inner-box1" class="collapse show">
+          {% for country in countries %}
+          <div class="my-1">
+            <label class="tick"
+              >{{ country.name }}
+              <input
+                data_id="{{ country.id }}"
+                data_name="{{ country.name }}"
+                type="checkbox"
+              />
+              <span class="check"></span>
+            </label>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="box border-bottom">
+        <div class="box-label text-uppercase d-flex align-items-center">
+          City
+          <button
+            class="btn ms-auto"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#inner-box2"
+            aria-expanded="false"
+            aria-controls="inner-box"
+          >
+            <span class="bi bi-plus"></span>
+          </button>
+        </div>
+        <div id="inner-box2" class="collapse show">
+          {% for city in cities %}
+          <div class="my-1">
+            <label class="tick"
+              >{{ city.name }}
+              <input
+                data_id="{{ city.id }}"
+                data_name="{{ city.name }}"
+                type="checkbox"
+              />
+              <span class="check"></span>
+            </label>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="box border-bottom">
+        <div class="box-label text-uppercase d-flex align-items-center">
+          Sport
+          <button
+            class="btn ms-auto"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#inner-box3"
+            aria-expanded="false"
+            aria-controls="inner-box"
+          >
+            <span class="bi bi-plus"></span>
+          </button>
+        </div>
+        <div id="inner-box3" class="collapse show">
+          {% for sport in sports %}
+          <div class="my-1">
+            <label class="tick"
+              >{{ sport.name }}
+              <input
+                data_id="{{ sport.id }}"
+                data_name="{{ sport.name }}"
+                type="checkbox"
+              />
+              <span class="check"></span>
+            </label>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-9">
+    <p>Search results ...</p>
+    {% for team in teams %}
+    <div class="col-lg-12">
+      <div class="card text-center">
+        <div class="card-header">{{ team.name }}</div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-4">
+              <i class="bi bi-geo-alt-fill"></i>
+              <span>{{ team.city.name }}, {{ team.city.country.name }}</span>
+            </div>
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+              <i class="bi bi-trophy-fill"></i>
+              <span>{{ team.sport.name }}</span>
+            </div>
+          </div>
+          <p class="card-text">{{ team.bio }}</p>
+          <a href="/teams/{{team.id}}" class="btn btn-primary">Connect</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock main %} {% block script %} {% endblock %}
