@@ -27,7 +27,12 @@
           {% for country in countries %}
           <div class="my-1">
             <label class="tick"
-              >{{ country.name }} <input type="checkbox" />
+              >{{ country.name }}
+              <input
+                data_id="{{ country.id }}"
+                data_name="{{ country.name }}"
+                type="checkbox"
+              />
               <span class="check"></span>
             </label>
           </div>
@@ -52,7 +57,12 @@
           {% for city in cities %}
           <div class="my-1">
             <label class="tick"
-              >{{ city.name }} <input type="checkbox" />
+              >{{ city.name }}
+              <input
+                data_id="{{ city.id }}"
+                data_name="{{ city.name }}"
+                type="checkbox"
+              />
               <span class="check"></span>
             </label>
           </div>
@@ -77,7 +87,12 @@
           {% for sport in sports %}
           <div class="my-1">
             <label class="tick"
-              >{{ sport.name }} <input type="checkbox" />
+              >{{ sport.name }}
+              <input
+                data_id="{{ sport.id }}"
+                data_name="{{ sport.name }}"
+                type="checkbox"
+              />
               <span class="check"></span>
             </label>
           </div>
