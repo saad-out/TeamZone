@@ -1,7 +1,21 @@
-{% extends "base.html" %} {% block style %} {% endblock %} {% block main %}
+{% extends "base.html" %} {% block style %}
+<style>
+  #edit-team {
+    display: none;
+  }
+</style>
+{% endblock %} {% block main %}
 <h1>THIS IS A CREATE TEAMS</h1>
+<div class="row mb-2">
+  <div class="col-xl-12">
+    <button id="toggle-btn" type="button" class="btn btn-primary float-end">
+      <i class="bi bi-pencil-square me-1"></i> Edit Team
+    </button>
+  </div>
+</div>
+
 <!-- Multi Columns Form -->
-<form class="row g-3" action="#" method="post">
+<form id="edit-team" class="row g-3" action="#" method="post">
   <div class="col-md-12">
     <label for="teamname" class="form-label">Team Name</label>
     <input
@@ -52,6 +66,7 @@
         type="file"
         id="teamlogo"
         value="{{ team.image }}"
+        accept="image/jpeg, image/png"
       />
     </div>
   </div>
@@ -59,4 +74,66 @@
     <button type="submit" class="btn btn-primary">Update Team</button>
   </div>
 </form>
-{% endblock main %} {% block script %} {% endblock %}
+<section id="team-info">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Team Details</h5>
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label">Name</div>
+            <div class="col-lg-9 col-md-8">{{ team.name}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label">Sport Type</div>
+            <div class="col-lg-9 col-md-8">{{ team.sport.name}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label">Location</div>
+            <div class="col-lg-9 col-md-8">
+              {{ team.city.name }}, {{ team.city.country.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary">
+        <i class="bi bi-pencil-square me-1"></i> Create Team Connection
+      </button>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Team Players</h5>
+          <!-- List group Numbered -->
+          <ol class="list-group list-group-numbered">
+            {% for player in team.players %}
+            <li class="list-group-item">{{ player.name }}</li>
+            {% endfor %}
+          </ol>
+          <!-- End List group Numbered -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock main %} {% block script %}
+<script>
+  const toggleBtn = document.getElementById("toggle-btn");
+  const team = document.getElementById("team-info");
+  const myForm = document.getElementById("edit-team");
+
+  toggleBtn.addEventListener("click", function () {
+    if (myForm.style.display == "none" || myForm.style.display == "") {
+      myForm.style.display = "block";
+      team.style.display = "none";
+      toggleBtn.innerHTML = '<i class="bi bi-x-square me-1"></i> Stop Editing';
+    } else {
+      myForm.style.display = "none";
+      team.style.display = "block";
+      toggleBtn.innerHTML =
+        '<i class="bi bi-pencil-square me-1"></i> Edit Team';
+    }
+  });
+</script>
+{% endblock %}

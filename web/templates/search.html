@@ -18,7 +18,7 @@
             data-bs-toggle="collapse"
             data-bs-target="#inner-box1"
             aria-expanded="false"
-            aria-controls="inner-box"
+            aria-controls="inner-box1"
           >
             <span class="bi bi-plus"></span>
           </button>
@@ -29,9 +29,10 @@
             <label class="tick"
               >{{ country.name }}
               <input
-                data_id="{{ country.id }}"
-                data_name="{{ country.name }}"
+                data-id="{{ country.id }}"
+                data-name="{{ country.name }}"
                 type="checkbox"
+                class="filter-checkbox country"
               />
               <span class="check"></span>
             </label>
@@ -48,7 +49,7 @@
             data-bs-toggle="collapse"
             data-bs-target="#inner-box2"
             aria-expanded="false"
-            aria-controls="inner-box"
+            aria-controls="inner-box2"
           >
             <span class="bi bi-plus"></span>
           </button>
@@ -59,9 +60,10 @@
             <label class="tick"
               >{{ city.name }}
               <input
-                data_id="{{ city.id }}"
-                data_name="{{ city.name }}"
+                data-id="{{ city.id }}"
+                data-name="{{ city.name }}"
                 type="checkbox"
+                class="filter-checkbox city"
               />
               <span class="check"></span>
             </label>
@@ -78,7 +80,7 @@
             data-bs-toggle="collapse"
             data-bs-target="#inner-box3"
             aria-expanded="false"
-            aria-controls="inner-box"
+            aria-controls="inner-box3"
           >
             <span class="bi bi-plus"></span>
           </button>
@@ -89,9 +91,10 @@
             <label class="tick"
               >{{ sport.name }}
               <input
-                data_id="{{ sport.id }}"
-                data_name="{{ sport.name }}"
+                data-id="{{ sport.id }}"
+                data-name="{{ sport.name }}"
                 type="checkbox"
+                class="filter-checkbox sport"
               />
               <span class="check"></span>
             </label>
@@ -102,6 +105,36 @@
     </div>
   </div>
   <div class="col-xl-9">
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control countriesShow"
+        placeholder="Select countries"
+        aria-label="Countries' name"
+        aria-describedby="button-addon2"
+        disabled
+      />
+      <input
+        type="text"
+        class="form-control citiesShow"
+        placeholder="Select cities"
+        aria-label="Cities' name"
+        aria-describedby="button-addon2"
+        disabled
+      />
+      <input
+        type="text"
+        class="form-control sportsShow"
+        placeholder="Select sports"
+        aria-label="Sports' name"
+        aria-describedby="button-addon2"
+        disabled
+      />
+
+      <button class="btn btn-primary" type="button" id="search-btn">
+        Search
+      </button>
+    </div>
     <p>Search results ...</p>
     {% for team in teams %}
     <div class="col-lg-12">
@@ -127,4 +160,94 @@
     {% endfor %}
   </div>
 </div>
-{% endblock main %} {% block script %} {% endblock %}
+{% endblock main %} {% block script %}
+<script>
+  const data = {
+    countries: {},
+    cities: {},
+    sports: {},
+  };
+  // Get all filter checkboxes
+  const checkboxes = document.querySelectorAll(".filter-checkbox");
+  const countriesShow = document.querySelector(".countriesShow");
+  const citiesShow = document.querySelector(".citiesShow");
+  const sportsShow = document.querySelector(".sportsShow");
+  const searchBtn = document.querySelector("#search-btn");
+
+  // Create an empty array to store selected filters
+  let selectedFilters = [];
+
+  // Add a click event listener to each checkbox
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("click", (event) => {
+      // Get the value and data name of the clicked checkbox
+      const dataName = event.target.getAttribute("data-name");
+      const dataId = event.target.getAttribute("data-id");
+
+      // If the checkbox is checked, add the filter to the selectedFilters array
+      if (event.target.classList.contains("country")) {
+        if (event.target.checked) {
+          data.countries[dataId] = dataName;
+        } else {
+          // If the checkbox is unchecked, remove the filter from the selectedFilters array
+          delete data.countries[dataId];
+        }
+        countriesShow.placeholder = Object.values(data.countries).join(", ");
+        if (countriesShow.placeholder == "") {
+          countriesShow.placeholder = "Select countries";
+        }
+      }
+      if (event.target.classList.contains("city")) {
+        if (event.target.checked) {
+          data.cities[dataId] = dataName;
+        } else {
+          // If the checkbox is unchecked, remove the filter from the selectedFilters array
+          delete data.cities[dataId];
+        }
+        citiesShow.placeholder = Object.values(data.cities).join(", ");
+        if (citiesShow.placeholder == "") {
+          citiesShow.placeholder = "Select cities";
+        }
+      }
+      if (event.target.classList.contains("sport")) {
+        if (event.target.checked) {
+          data.sports[dataId] = dataName;
+        } else {
+          // If the checkbox is unchecked, remove the filter from the selectedFilters array
+          delete data.sports[dataId];
+        }
+        sportsShow.placeholder = Object.values(data.sports).join(", ");
+        if (sportsShow.placeholder == "") {
+          sportsShow.placeholder = "Select sports";
+        }
+      }
+      // console.log(data);
+    });
+  });
+
+  async function postData(url = "", data = {}) {
+    postdata = {};
+    postdata.countries = Object.keys(data.countries);
+    postdata.cities = Object.keys(data.cities);
+    postdata.sports = Object.keys(data.sports);
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postdata),
+    });
+
+    return response.json();
+  }
+
+  searchBtn.addEventListener("click", () => {
+    url = "http://127.0.0.1:5001/api/v1/filter_teams";
+    returnedData = postData(url, data);
+    returnedData.then((jsonData) => {
+      console.log(jsonData);
+    });
+  });
+</script>
+{% endblock %}
