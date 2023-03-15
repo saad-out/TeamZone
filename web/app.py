@@ -6,12 +6,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def landing_page():
-    return render_template('new_index.html')
+    return render_template('index.html')
 
 
-@app.route('/dashboard')
-def dashboard():
-    return render_template('base.html')
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
 
 @app.route('/search')
 def search():
@@ -53,11 +54,6 @@ def profile():
 @app.route('/signout')
 def signout():
     return render_template('signout.html')
-
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
 
 
 if __name__ == '__main__':

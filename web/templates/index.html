@@ -11,11 +11,15 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
     <!-- css -->
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='styles/style_landing.css') }}"
     />
+    <!-- JS -->
     <!-- font awesome-->
     <link
       rel="stylesheet"
@@ -30,12 +34,13 @@
     />
     <title>TeamZone</title>
   </head>
+
   <body>
     <!-- navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light">
       <div class="teamzone-logo"></div>
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{ url_for('landing_page') }}">
           <h1 class="name"><i>TeamZone</i></h1>
         </a>
         <button
@@ -61,12 +66,12 @@
               <a class="nav-link" href="#about">About</a>
             </li>
             <li class="nav-item">
+              <!-- <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
               <a
-                class="nav-link disabled"
-                href="#"
-                tabindex="-1"
-                aria-disabled="true"
-                >Disabled</a
+                class="nav-link active"
+                aria-current="page"
+                href="{{ url_for('login') }}"
+                >Begin</a
               >
             </li>
           </ul>
@@ -96,7 +101,6 @@
       <h2 class="title">Features</h2>
       <div class="content">
         <div class="card">
-          <!-- <div class="icon"><i class="fas fa-edit"></i></div> -->
           <div class="info">
             <h3>Find sports teams</h3>
             <p>
@@ -105,7 +109,6 @@
           </div>
         </div>
         <div class="card">
-          <!-- <div class="icon"><i class="fas fa-edit"></i></div> -->
           <div class="info">
             <h3>Create your team</h3>
             <p>
@@ -115,7 +118,6 @@
           </div>
         </div>
         <div class="card">
-          <!-- <div class="icon"><i class="fas fa-edit"></i></div> -->
           <div class="info">
             <h3>Compete with other teams</h3>
             <p>
@@ -153,11 +155,7 @@
               >
             </div>
           </div>
-          <div class="col-md-3 col-sm-6 col-xs-12">
-            <!-- <div class="aboutus-banner">
-                    <img src="http://themeinnovation.com/demo2/html/build-up/img/home1/about1.jpg" alt="">
-                </div> -->
-          </div>
+          <div class="col-md-3 col-sm-6 col-xs-12"></div>
           <div class="col-md-5 col-sm-6 col-xs-12">
             <div class="feature">
               <div class="feature-box">
@@ -210,18 +208,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <footer class="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12 text-center social-icons">
-            <a href="https://github.com"><i class="fab fa-github"></i></a>
-            <a href="https://linkedin.com"><i class="fab fa-linkedin fa-2x"></i></a>
-            <a href="https://twitter.com"><i class="fab fa-twitter fa-2x"></i></a>
-          </div>
-        </div>
-      </div>
-    </footer> -->
 
     <footer
       class="text-center text-white"
