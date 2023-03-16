@@ -7,7 +7,7 @@
 <h1>THIS IS A SEARCH</h1>
 <div class="row">
   <div class="col-xl-3">
-    <div class="p-2 ms-md-4 ms-sm-2 border">
+    <div class="p-2 ms-md-4 ms-sm-2 border" style="background-color: white">
       <div class="border-bottom h5 text-uppercase">Filter By</div>
       <div class="box border-bottom">
         <div class="box-label text-uppercase d-flex align-items-center">
@@ -71,7 +71,7 @@
           {% endfor %}
         </div>
       </div>
-      <div class="box border-bottom">
+      <div class="box">
         <div class="box-label text-uppercase d-flex align-items-center">
           Sport
           <button
@@ -135,30 +135,8 @@
         Search
       </button>
     </div>
-    <p>Search results ...</p>
     <div id="search-result">
-      {% for team in teams %}
-      <div class="col-lg-12">
-        <div class="card text-center">
-          <div class="card-header">{{ team.name }}</div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-lg-4">
-                <i class="bi bi-geo-alt-fill"></i>
-                <span>{{ team.city.name }}, {{ team.city.country.name }}</span>
-              </div>
-              <div class="col-lg-4"></div>
-              <div class="col-lg-4">
-                <i class="bi bi-trophy-fill"></i>
-                <span>{{ team.sport.name }}</span>
-              </div>
-            </div>
-            <p class="card-text">{{ team.bio }}</p>
-            <a href="/teams/{{team.id}}" class="btn btn-primary">Connect</a>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
+      <h1>Looking for teams?</h1>
     </div>
   </div>
 </div>
@@ -239,12 +217,23 @@
       searchResult.innerHTML = "<p>No result found</p>";
       return;
     }
-    searchResult.innerHTML = "";
+    searchResult.innerHTML = `<p>Teams found (${teams.length})</p>`;
     for (const team of teams) {
       searchResult.innerHTML += `<div class="col-lg-12">
         <div class="card text-center">
           <div class="card-header">${team.name}</div>
           <div class="card-body">
+            <div class="row">
+              <div class="col-lg-4">
+                <i class="bi bi-geo-alt-fill"></i>
+                <span>${team.city}, ${team.country}</span>
+              </div>
+              <div class="col-lg-4"></div>
+              <div class="col-lg-4">
+                <i class="bi bi-trophy-fill"></i>
+                <span>${team.sport}</span>
+              </div>
+            </div>
             <p class="card-text">${team.bio}</p>
             <a href="/teams/${team.id}" class="btn btn-primary">Connect</a>
           </div>
