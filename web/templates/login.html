@@ -120,12 +120,12 @@
             <div class="slider-tab"></div>
           </div>
           <div class="form-inner">
-            <form action="#" class="login" method="post">
+            <form action="{{ url_for('login') }}" class="login" method="post">
               <div class="field">
-                <input type="text" placeholder="Email Address" required />
+                <input type="text" placeholder="Email Address" name="email" required />
               </div>
               <div class="field">
-                <input type="password" placeholder="Password" required />
+                <input type="password" placeholder="Password" name="password" required />
               </div>
               <div class="pass-link">
                 <a href="#">Forgot password?</a>
@@ -138,17 +138,24 @@
                 Not a member? <a href="">Signup now</a>
               </div>
             </form>
-            <form action="#" class="signup" method="post">
+            <form action="{{ url_for('signup') }}" class="signup" method="post">
               <div class="field">
-                <input type="text" placeholder="Email Address" required />
+                <input type="text" placeholder="Name" name="name" required />
               </div>
               <div class="field">
-                <input type="password" placeholder="Password" required />
+                <input type="text" placeholder="Username" name="username" required />
+              </div>
+              <div class="field">
+                <input type="text" placeholder="Email Address" name="email" required />
+              </div>
+              <div class="field">
+                <input type="password" placeholder="Password" name="password" required />
               </div>
               <div class="field">
                 <input
                   type="password"
                   placeholder="Confirm password"
+                  name="confirm_password"
                   required
                 />
               </div>

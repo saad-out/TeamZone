@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """Module defining the User class"""
-
+from flask_login import UserMixin
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, Text
 from sqlalchemy.orm import relationship
 
-class User(BaseModel, Base):
+class User(UserMixin, BaseModel, Base):
     """Attributes:
     __tablename__ (str): The name of the table in the database where User objects are stored.
     name (sqlalchemy.Column): The name of the user. Max length is 128 characters.
