@@ -48,12 +48,11 @@ class Storage:
         TZ_ENV = getenv('TZ_ENV')
 
         # Create SQLAlchemy engine instance
-        """self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
                                       format(TZ_MYSQL_USER,
                                              TZ_MYSQL_PWD,
                                              TZ_MYSQL_HOST,
-                                             TZ_MYSQL_DB))"""
-        self.__engine = create_engine('sqlite:///tz.db')
+                                             TZ_MYSQL_DB))
         # Drop all tables in the database if in test environment
         if TZ_ENV == "test":
             Base.metadata.drop_all(self.__engine)
@@ -147,3 +146,22 @@ class Storage:
             count = len(storage.all(cls).values())
 
         return count
+    
+    def query(self, cls, attribute, value):
+        """
+        Query object based on attribute
+
+        Args:
+            cls: Object's class
+            attribute: Object's attribute to filter by
+            value: Value of `attribute`
+        
+        Return: Object if exists or None
+        """
+        if cls not in classes.values():
+            return None
+        
+        try:
+            return self.__session.query(cls).filter(getattr(cls, attribute) == value).first()
+        except AttributeError:
+            return None

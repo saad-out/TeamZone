@@ -11,7 +11,7 @@
           alt="Profile"
           class="rounded-circle"
         />
-        <h2>Kevin Anderson</h2>
+        <h2>{{ current_user.name }}</h2>
         <!--<h3>Web Designer</h3>-->
       </div>
     </div>
@@ -69,17 +69,17 @@
 
             <div class="row">
               <div class="col-lg-3 col-md-4 label">Name</div>
-              <div class="col-lg-9 col-md-8">John Doe</div>
+              <div class="col-lg-9 col-md-8">{{ current_user.name }}</div>
             </div>
 
             <div class="row">
               <div class="col-lg-3 col-md-4 label">Username</div>
-              <div class="col-lg-9 col-md-8">@johnd</div>
+              <div class="col-lg-9 col-md-8">@{{ current_user.username }}</div>
             </div>
 
             <div class="row">
               <div class="col-lg-3 col-md-4 label">Email</div>
-              <div class="col-lg-9 col-md-8">john@test.com</div>
+              <div class="col-lg-9 col-md-8">{{ current_user.email }}</div>
             </div>
           </div>
 
@@ -124,7 +124,7 @@
                     type="text"
                     class="form-control"
                     id="fullName"
-                    value="Kevin Anderson"
+                    value="{{ current_user.name }}"
                   />
                 </div>
               </div>
