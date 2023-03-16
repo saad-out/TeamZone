@@ -5,6 +5,8 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, Text, Table
 from sqlalchemy.orm import relationship
 
+time = "%Y-%m-%dT%H:%M:%S.%f"
+
 team_membership = Table('team_membership', Base.metadata,
                         Column("team_id", String(60), ForeignKey("teams.id", onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
                         Column("user_id", String(60), ForeignKey("users.id", onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
@@ -42,3 +44,23 @@ class Team(BaseModel, Base):
     notifications = relationship("Notification", backref="team", foreign_keys="[Notification.receiver_id]", cascade="all, delete, delete-orphan")
     
     leader = relationship("User", foreign_keys=[leader_id])
+
+    def to_dict(self):
+        """Returns a dictionary of the instance"""
+        new_dict = self.__dict__.copy()
+        if "created_at" in new_dict:
+            new_dict["created_at"] = new_dict["created_at"].strftime(time)
+        if "updated_at" in new_dict:
+            new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
+        for key in ["_sa_instance_state", "country", "cities", "teams", "players",
+                    "notifications", "team_one", "team_two"]:
+            if key in new_dict:
+                del new_dict[key]
+
+        new_dict["__class__"] = self.__class__.__name__
+        new_dict["city"] = self.city.name
+        new_dict["country"] = self.city.country.name
+        new_dict["sport"] = self.sport.name
+        new_dict["leader"] = self.leader.name
+
+        return new_dict
