@@ -19,29 +19,13 @@ def search():
     return render_template('search.html', teams=teams, countries=countries, sports=sports, cities=cities)
 
 
-@app.route('/create', methods=['GET', 'POST'])
-@login_required
-def create():
-    cities = storage.all(City).values()
-    countries = storage.all(Country).values()
-    sports = storage.all(Sport).values()
-    return render_template('create_teams.html', cities=cities, countries=countries, sports=sports)
-
-
-@app.route('/edit')
-@login_required
-def edit():
-    teams = storage.all(Team).values()
-    return render_template('teams.html', teams=teams)
-
-
-@app.route('/teams/<id>')
-def edit_team(id):
+@app.route('/search/<id>')
+def team_info(id):
     team = storage.get(Team, id)
     cities = storage.all(City).values()
     countries = storage.all(Country).values()
     sports = storage.all(Sport).values()
-    return render_template('team.html', team=team, cities=cities, countries=countries, sports=sports)
+    return render_template('team.html', team=team, cities=cities,countries=countries, sports=sports, edit=False)
 
 
 @app.route('/profile')

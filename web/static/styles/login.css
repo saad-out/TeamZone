@@ -10,7 +10,7 @@ header {
 }
 
 .teamzone-logo {
-  background: url('../images/resized_logo-removebg-preview.png') no-repeat;
+  background: url('../images/app_logo.png') no-repeat;
   background-size: 100% 100%;
   width: 100px;
   height: 65px;
@@ -234,13 +234,13 @@ form .btn input[type="submit"] {
 
 .details {
   margin: 1%;
-  padding: 5%;
+  padding-top: 10%;
   /* background-color: rgba(168, 184, 118, 0.102); */
   /* border: solid 2px purple; */
   max-width: 50%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
 }
 

@@ -1,5 +1,10 @@
-{% extends "base.html" %} {% block style %} {% endblock %} {% block main %}
-<h1>THIS IS A PROFILE</h1>
+{% extends "base.html" %}
+
+{% block title %}
+<title>My Profile</title>
+{% endblock title %}
+
+{% block main %}
 <div class="row">
   <div class="col-xl-4">
     <div class="card">
@@ -210,4 +215,4 @@
     </div>
   </div>
 </div>
-{% endblock main %} {% block script %} {% endblock %}
+{% endblock main %}
