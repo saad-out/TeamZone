@@ -1,7 +1,7 @@
 from web.app import app
 
-from flask import render_template
-from flask_login import login_required
+from flask import render_template, redirect, flash, url_for
+from flask_login import login_required, current_user
 from models import storage, City, Country, Sport, Team
 
 
@@ -19,13 +19,17 @@ def search():
     return render_template('search.html', teams=teams, countries=countries, sports=sports, cities=cities)
 
 
-@app.route('/search/<id>')
+@app.route('/search/<id>', methods=['POST', 'GET'])
 def team_info(id):
     team = storage.get(Team, id)
+    if not team:
+        flash("Team doesn't exist")
+        return redirect(url_for('search'))
     cities = storage.all(City).values()
     countries = storage.all(Country).values()
     sports = storage.all(Sport).values()
-    return render_template('team.html', team=team, cities=cities,countries=countries, sports=sports, edit=False)
+    edit = current_user.id == team.leader_id
+    return render_template('team.html', team=team, cities=cities,countries=countries, sports=sports, edit=edit)
 
 
 @app.route('/profile')

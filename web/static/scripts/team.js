@@ -13,3 +13,9 @@ toggleBtn.addEventListener("click", function () {
     toggleBtn.innerHTML = '<i class="bi bi-pencil-square me-1"></i> Edit Team';
   }
 });
+
+const checkbox = document.querySelector("#reset-picture");
+const imgInput = document.querySelector("#image");
+checkbox.addEventListener("change", () => {
+  imgInput.disabled = checkbox.checked;
+});

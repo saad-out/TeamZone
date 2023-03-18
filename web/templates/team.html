@@ -14,10 +14,15 @@
     </button>
   </div>
 </div>
-{% endif %}
 
 <!-- Multi Columns Form -->
-<form id="edit-team" class="row g-3" action="#" method="post">
+<form
+  id="edit-team"
+  class="row g-3"
+  action="{{ url_for('edit_team', id=team.id) }}"
+  method="post"
+  enctype="multipart/form-data"
+>
   <div class="col-md-12">
     <label for="teamname" class="form-label">Team Name</label>
     <input
@@ -42,14 +47,16 @@
   <div class="col-md-6">
     <label for="teamcountry" class="form-label">Country</label>
     <select id="teamcountry" class="form-select" name="countryid">
-      {% for country in countries %}
+      {% for country in countries %} {% if team.city.country_id == country.id %}
+      <option value="{{ country.id }}" selected>{{ country.name }}</option>
+      {% else %}
       <option value="{{ country.id }}">{{ country.name }}</option>
-      {% endfor %}
+      {% endif %} {% endfor %}
     </select>
   </div>
   <div class="col-md-6">
     <label for="teamcity" class="form-label">City</label>
-    <select id="teamcity" class="form-select" name="teamid">
+    <select id="teamcity" class="form-select" name="cityid">
       {% for city in cities %} {% if team.city_id == city.id %}
       <option value="{{ city.id }}" selected>{{ city.name }}</option>
       {% else %}
@@ -68,21 +75,33 @@
     </select>
   </div>
   <div class="col-md-12">
-    <label for="teamlogo" class="col-sm-2 col-form-label">Upload Logo</label>
+    <label for="image" class="col-sm-2 col-form-label">Upload Logo</label>
     <div class="col-sm-10">
       <input
         class="form-control"
         type="file"
-        id="teamlogo"
-        value="{{ team.image }}"
+        id="image"
+        name="image"
         accept="image/jpeg, image/png"
       />
     </div>
+  </div>
+  <div class="col-md-12">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      id="reset-picture"
+      name="reset-picture"
+    />
+    <label for="reset-picture" class="col-md-4 col-lg-3 col-form-label"
+      >Use default image</label
+    >
   </div>
   <div class="text-center">
     <button type="submit" class="btn btn-primary">Update Team</button>
   </div>
 </form>
+{% endif %}
 <section id="team-info">
   <div class="row">
     <div class="col-md-6">
