@@ -10,7 +10,7 @@
         <img
           src="{{ url_for('static', filename='images/users/{}'.format(current_user.image)) }}"
           alt="Profile"
-          class="rounded-circle"
+          class="img-fluid rounded-circle w-50 h-50 mx-auto d-block"
           style="max-width: 100%; height: auto"
         />
         <h2>{{ current_user.name }}</h2>

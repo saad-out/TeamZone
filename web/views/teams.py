@@ -18,8 +18,6 @@ def myteams():
 def edit_team(id):
     team = storage.get(Team, id)
     if request.method == 'POST':
-        print(request.form)
-        print(request.files)
         team.name = request.form.get('teamname')
         team.bio = request.form.get('teambio')
         #country_id = request.form.get('countryid')

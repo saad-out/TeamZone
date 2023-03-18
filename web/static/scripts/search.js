@@ -77,25 +77,33 @@ $(document).ready(function () {
     searchResult.innerHTML = `<p>Teams found (${teams.length})</p>`;
     for (const team of teams) {
       searchResult.innerHTML += `<div class="col-lg-12">
-            <div class="card text-center">
-              <div class="card-header">${team.name}</div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-lg-4">
-                    <i class="bi bi-geo-alt-fill"></i>
-                    <span>${team.city}, ${team.country}</span>
-                  </div>
-                  <div class="col-lg-4"></div>
-                  <div class="col-lg-4">
-                    <i class="bi bi-trophy-fill"></i>
-                    <span>${team.sport}</span>
-                  </div>
-                </div>
-                <p class="card-text">${team.bio}</p>
-                <a href="/search/${team.id}" class="btn btn-primary">Connect</a>
-              </div>
-            </div>
-          </div>`;
+  <div class="card text-center">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <img
+        src="/static/images/teams/${team.image}"
+        alt="Team Logo"
+        class="img-fluid img-thumbnail rounded-circle img-sm"
+        style="height: 50px; width: 50px"
+      /><span>${team.name}</span>
+      <div></div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-4">
+          <i class="bi bi-geo-alt-fill"></i>
+          <span>${team.city}, ${team.country}</span>
+        </div>
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+          <i class="bi bi-trophy-fill"></i>
+          <span>${team.sport}</span>
+        </div>
+      </div>
+      <p class="card-text">${team.bio}</p>
+      <a href="/search/${team.id}" class="btn btn-primary">Connect</a>
+    </div>
+  </div>
+</div>`;
     }
   }
 
