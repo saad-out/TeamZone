@@ -28,7 +28,7 @@ def team_info(id):
     cities = storage.all(City).values()
     countries = storage.all(Country).values()
     sports = storage.all(Sport).values()
-    edit = current_user.id == team.leader_id
+    edit = current_user.get_id() == team.leader_id
     return render_template('team.html', team=team, cities=cities,countries=countries, sports=sports, edit=edit)
 
 
