@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, flash, url_for
 from flask_login import LoginManager
 
 from models import storage
@@ -14,6 +14,13 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     return storage.query(User, "id", user_id)
+
+@login_manager.unauthorized_handler
+def unauthorized_callback():
+    # Redirect non-logged-in users to the login page with flashed message
+    flash('Please Login to access this page.')
+    return redirect(url_for('login'))
+
 
 from web.views import *
 

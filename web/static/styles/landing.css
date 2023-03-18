@@ -5,15 +5,17 @@ header {
 
 .navbar {
     display: flex;
-    background-color:rgba(182, 167, 34, 0.271);
-    min-height: 100px;
+    background-color: rgb(210, 205, 163);
+    min-height: 70px;
 }
 
 .teamzone-logo {
-    background: url('../images/resized_logo-removebg-preview.png') no-repeat;
+    background: url('../images/app_logo.png') no-repeat;
     background-size: 100% 100%;
-    min-width: 120px;
-    min-height: 100px;
+    /* min-width: 120px; */
+    width: 100px;
+    /* min-height: 100px; */
+    height: 65px;
     margin-left: 5%;
 }
 

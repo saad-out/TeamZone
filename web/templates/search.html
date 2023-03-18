@@ -1,10 +1,14 @@
-{% extends "base.html" %} {% block style %}
-<link
-  href="{{ url_for('static', filename='styles/filter.css') }}"
-  rel="stylesheet"
-/>
-{% endblock %} {% block main %}
-<h1>THIS IS A SEARCH</h1>
+{% extends "base.html" %}
+
+{% block title %}
+<title>Search & Filter</title>
+{% endblock title %}
+
+{% block style %}
+<link href="{{ url_for('static', filename='styles/filter.css') }}" rel="stylesheet" />
+{% endblock style%}
+
+{% block main %}
 <div class="row">
   <div class="col-xl-3">
     <div class="p-2 ms-md-4 ms-sm-2 border" style="background-color: white">
@@ -12,124 +16,93 @@
       <div class="box border-bottom">
         <div class="box-label text-uppercase d-flex align-items-center">
           Country
-          <button
-            class="btn ms-auto"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#inner-box1"
-            aria-expanded="false"
-            aria-controls="inner-box1"
-          >
+          <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#inner-box1"
+            aria-expanded="false" aria-controls="inner-box1">
             <span class="bi bi-plus"></span>
           </button>
         </div>
-        <div id="inner-box1" class="collapse show">
-          {% for country in countries %}
-          <div class="my-1">
-            <label class="tick"
-              >{{ country.name }}
-              <input
-                data-id="{{ country.id }}"
-                data-name="{{ country.name }}"
-                type="checkbox"
-                class="filter-checkbox country"
-              />
-              <span class="check"></span>
-            </label>
+
+        <div>
+          <input type="text" id="country-search" placeholder="Search countries" style="width: 150px;">
+        </div>
+        <div id="country-list-container" style="height: 150px; overflow-y: auto;">
+          <div id="inner-box1" class="collapse show">
+            {% for country in countries %}
+            <div class="my-1 country-item">
+              <label class="tick">{{ country.name }}
+                <input data-id="{{ country.id }}" data-name="{{ country.name }}" type="checkbox"
+                  class="filter-checkbox country" />
+                <span class="check"></span>
+              </label>
+            </div>
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
       </div>
+
+
       <div class="box border-bottom">
         <div class="box-label text-uppercase d-flex align-items-center">
           City
-          <button
-            class="btn ms-auto"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#inner-box2"
-            aria-expanded="false"
-            aria-controls="inner-box2"
-          >
+          <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#inner-box2"
+            aria-expanded="false" aria-controls="inner-box2">
             <span class="bi bi-plus"></span>
           </button>
         </div>
-        <div id="inner-box2" class="collapse show">
-          {% for city in cities %}
-          <div class="my-1">
-            <label class="tick"
-              >{{ city.name }}
-              <input
-                data-id="{{ city.id }}"
-                data-name="{{ city.name }}"
-                type="checkbox"
-                class="filter-checkbox city"
-              />
-              <span class="check"></span>
-            </label>
+        <div>
+          <input type="text" id="city-search" placeholder="Search cities" style="width: 150px;">
+        </div>
+        <div id="city-list-container" style="height: 150px; overflow-y: auto;">
+          <div id="inner-box2" class="collapse show">
+            {% for city in cities %}
+            <div class="my-1">
+              <label class="tick">{{ city.name }}
+                <input data-id="{{ city.id }}" data-name="{{ city.name }}" type="checkbox"
+                  class="filter-checkbox city" />
+                <span class="check"></span>
+              </label>
+            </div>
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
       </div>
+
       <div class="box">
         <div class="box-label text-uppercase d-flex align-items-center">
           Sport
-          <button
-            class="btn ms-auto"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#inner-box3"
-            aria-expanded="false"
-            aria-controls="inner-box3"
-          >
+          <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#inner-box3"
+            aria-expanded="false" aria-controls="inner-box3">
             <span class="bi bi-plus"></span>
           </button>
         </div>
-        <div id="inner-box3" class="collapse show">
-          {% for sport in sports %}
-          <div class="my-1">
-            <label class="tick"
-              >{{ sport.name }}
-              <input
-                data-id="{{ sport.id }}"
-                data-name="{{ sport.name }}"
-                type="checkbox"
-                class="filter-checkbox sport"
-              />
-              <span class="check"></span>
-            </label>
+
+        <div>
+          <input type="text" id="sport-search" placeholder="Search sports" style="width: 150px;">
+        </div>
+        <div id="sport-list-container" style="height: 150px; overflow-y: auto;">
+          <div id="inner-box3" class="collapse show">
+            {% for sport in sports %}
+            <div class="my-1">
+              <label class="tick">{{ sport.name }}
+                <input data-id="{{ sport.id }}" data-name="{{ sport.name }}" type="checkbox"
+                  class="filter-checkbox sport" />
+                <span class="check"></span>
+              </label>
+            </div>
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
       </div>
     </div>
   </div>
   <div class="col-xl-9">
     <div class="input-group mb-3">
-      <input
-        type="text"
-        class="form-control countriesShow"
-        placeholder="Select countries"
-        aria-label="Countries' name"
-        aria-describedby="button-addon2"
-        disabled
-      />
-      <input
-        type="text"
-        class="form-control citiesShow"
-        placeholder="Select cities"
-        aria-label="Cities' name"
-        aria-describedby="button-addon2"
-        disabled
-      />
-      <input
-        type="text"
-        class="form-control sportsShow"
-        placeholder="Select sports"
-        aria-label="Sports' name"
-        aria-describedby="button-addon2"
-        disabled
-      />
+      <input type="text" class="form-control countriesShow" placeholder="Select countries" aria-label="Countries' name"
+        aria-describedby="button-addon2" disabled />
+      <input type="text" class="form-control citiesShow" placeholder="Select cities" aria-label="Cities' name"
+        aria-describedby="button-addon2" disabled />
+      <input type="text" class="form-control sportsShow" placeholder="Select sports" aria-label="Sports' name"
+        aria-describedby="button-addon2" disabled />
 
       <button class="btn btn-primary" type="button" id="search-btn">
         Search
@@ -141,117 +114,6 @@
   </div>
 </div>
 {% endblock main %} {% block script %}
-<script>
-  const data = {
-    countries: {},
-    cities: {},
-    sports: {},
-  };
-  const checkboxes = document.querySelectorAll(".filter-checkbox");
-  const countriesShow = document.querySelector(".countriesShow");
-  const citiesShow = document.querySelector(".citiesShow");
-  const sportsShow = document.querySelector(".sportsShow");
-  const searchBtn = document.querySelector("#search-btn");
-  const searchResult = document.querySelector("#search-result");
-
-  checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener("click", (event) => {
-      const dataName = event.target.getAttribute("data-name");
-      const dataId = event.target.getAttribute("data-id");
-
-      if (event.target.classList.contains("country")) {
-        if (event.target.checked) {
-          data.countries[dataId] = dataName;
-        } else {
-          delete data.countries[dataId];
-        }
-        countriesShow.placeholder = Object.values(data.countries).join(", ");
-        if (countriesShow.placeholder == "") {
-          countriesShow.placeholder = "Select countries";
-        }
-      }
-      if (event.target.classList.contains("city")) {
-        if (event.target.checked) {
-          data.cities[dataId] = dataName;
-        } else {
-          delete data.cities[dataId];
-        }
-        citiesShow.placeholder = Object.values(data.cities).join(", ");
-        if (citiesShow.placeholder == "") {
-          citiesShow.placeholder = "Select cities";
-        }
-      }
-      if (event.target.classList.contains("sport")) {
-        if (event.target.checked) {
-          data.sports[dataId] = dataName;
-        } else {
-          delete data.sports[dataId];
-        }
-        sportsShow.placeholder = Object.values(data.sports).join(", ");
-        if (sportsShow.placeholder == "") {
-          sportsShow.placeholder = "Select sports";
-        }
-      }
-    });
-  });
-
-  async function postData(url = "", data = {}) {
-    postdata = {};
-    postdata.countries = Object.keys(data.countries);
-    postdata.cities = Object.keys(data.cities);
-    postdata.sports = Object.keys(data.sports);
-
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(postdata),
-    });
-
-    return response.json();
-  }
-
-  function populateSearch(teams) {
-    if (teams.length == 0) {
-      searchResult.innerHTML = "<p>No result found</p>";
-      return;
-    }
-    searchResult.innerHTML = `<p>Teams found (${teams.length})</p>`;
-    for (const team of teams) {
-      searchResult.innerHTML += `<div class="col-lg-12">
-        <div class="card text-center">
-          <div class="card-header">${team.name}</div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-lg-4">
-                <i class="bi bi-geo-alt-fill"></i>
-                <span>${team.city}, ${team.country}</span>
-              </div>
-              <div class="col-lg-4"></div>
-              <div class="col-lg-4">
-                <i class="bi bi-trophy-fill"></i>
-                <span>${team.sport}</span>
-              </div>
-            </div>
-            <p class="card-text">${team.bio}</p>
-            <a href="/teams/${team.id}" class="btn btn-primary">Connect</a>
-          </div>
-        </div>
-      </div>`;
-    }
-  }
-
-  searchBtn.addEventListener("click", () => {
-    searchResult.innerHTML = `<div class="spinner-border" style="width: 50px; height: 50px;" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>`;
-    url = "http://127.0.0.1:5001/api/v1/filter_teams";
-    returnedData = postData(url, data);
-    returnedData.then((teams) => {
-      console.log(teams);
-      populateSearch(teams);
-    });
-  });
+<script src="{{ url_for('static', filename='scripts/search.js')}}">
 </script>
 {% endblock %}

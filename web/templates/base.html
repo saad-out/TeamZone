@@ -4,13 +4,15 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
+    {% block title %} 
     <title>Dashboard</title>
+    {% endblock title %}
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
-    <!-- Favicons -->
+    <!-- Logo -->
     <link
-      href="{{ url_for('static', filename='images/resized_logo-removebg-preview.png') }}"
+      href="{{ url_for('static', filename='images/app_logo.png') }}"
       rel="icon"
     />
 
@@ -35,11 +37,15 @@
 
     <!-- Template Main CSS File -->
     <link
-      href="{{ url_for('static', filename='styles/style_base.css') }}"
+      href="{{ url_for('static', filename='styles/base.css') }}"
       rel="stylesheet"
     />
 
-    {% block style %} {% endblock %}
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    {% block style %}
+    {% endblock style %}
   </head>
 
   <body>
@@ -48,38 +54,20 @@
       <div class="d-flex align-items-center justify-content-between">
         <i class="bi bi-list toggle-sidebar-btn"></i>
         <a
-          href="{{ url_for('landing_page')}}"
+          href="{{ url_for('signout', next=url_for('landing_page')) }}"
           class="logo d-flex align-items-center"
         >
           <img
-            src="{{ url_for('static', filename='images/resized_logo-removebg-preview.png') }}"
+            src="{{ url_for('static', filename='images/app_logo.png') }}"
             alt=""
           />
-          <span class="d-none d-lg-block">Team Zone</span>
+          <span class="d-none d-lg-block">TeamZone</span>
         </a>
       </div>
       <!-- End Logo -->
 
-      <div class="search-bar">
-        <form
-          class="search-form d-flex align-items-center"
-          method="POST"
-          action="#"
-        >
-          <input
-            type="text"
-            name="query"
-            placeholder="Search"
-            title="Enter search keyword"
-          />
-          <button type="submit" title="Search">
-            <i class="bi bi-search"></i>
-          </button>
-        </form>
-      </div>
-      <!-- End Search Bar -->
-
       <nav class="header-nav ms-auto">
+      {% if current_user.is_authenticated %}
         <ul class="d-flex align-items-center">
           <li class="nav-item dropdown">
             <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
@@ -210,8 +198,17 @@
           </li>
           <!-- End Profile Nav -->
         </ul>
+      {% else %}
+      <nav class="navbar navbar-light">
+        <form class="container-fluid justify-content-start">
+          <button class="btn btn-outline-success me-2" type="button"><a href="{{ url_for('login') }}">Log In</a></button>
+          <button class="btn btn-sm btn-outline-secondary" type="button"><a href="{{ url_for('login')}}">Sign Up</a></button>
+        </form>
       </nav>
+      {% endif %}
+    </nav>
       <!-- End Icons Navigation -->
+
     </header>
     <!-- End Header -->
 
@@ -247,14 +244,14 @@
             class="nav-content collapse"
             data-bs-parent="#sidebar-nav"
           >
+          <li>
+            <a href="{{ url_for('myteams') }}">
+              <i class="bi bi-circle"></i><span>My Teams</span>
+            </a>
+          </li>
             <li>
               <a href="{{ url_for('create') }}">
-                <i class="bi bi-circle"></i><span>Create Teams</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{ url_for('edit') }}">
-                <i class="bi bi-circle"></i><span>Your Teams</span>
+                <i class="bi bi-circle"></i><span>Create Team</span>
               </a>
             </li>
           </ul>
