@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    {% block title %} 
+    {% block title %}
     <title>Dashboard</title>
     {% endblock title %}
     <meta content="" name="description" />
@@ -44,8 +44,7 @@
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
-    {% block style %}
-    {% endblock style %}
+    {% block style %} {% endblock style %}
   </head>
 
   <body>
@@ -67,7 +66,7 @@
       <!-- End Logo -->
 
       <nav class="header-nav ms-auto">
-      {% if current_user.is_authenticated %}
+        {% if current_user.is_authenticated %}
         <ul class="d-flex align-items-center">
           <li class="nav-item dropdown">
             <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
@@ -151,7 +150,7 @@
               data-bs-toggle="dropdown"
             >
               <img
-                src="{{ url_for('static', filename='images/profile-img.jpg') }}"
+                src="{{ url_for('static', filename='images/users/{}'.format(current_user.image)) }}"
                 alt="Profile"
                 class="rounded-circle"
               />
@@ -198,20 +197,23 @@
           </li>
           <!-- End Profile Nav -->
         </ul>
-      {% else %}
-      <nav class="navbar navbar-light">
-        <form class="container-fluid justify-content-start">
-          <button class="btn btn-outline-success me-2" type="button"><a href="{{ url_for('login') }}">Log In</a></button>
-          <button class="btn btn-sm btn-outline-secondary" type="button"><a href="{{ url_for('login')}}">Sign Up</a></button>
-        </form>
+        {% else %}
+        <nav class="navbar navbar-light">
+          <form class="container-fluid justify-content-start">
+            <button class="btn btn-outline-success me-2" type="button">
+              <a href="{{ url_for('login') }}">Log In</a>
+            </button>
+            <button class="btn btn-sm btn-outline-secondary" type="button">
+              <a href="{{ url_for('login')}}">Sign Up</a>
+            </button>
+          </form>
+        </nav>
+        {% endif %}
       </nav>
-      {% endif %}
-    </nav>
       <!-- End Icons Navigation -->
-
     </header>
     <!-- End Header -->
-
+    {% if current_user.is_authenticated %}
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
       <ul class="sidebar-nav" id="sidebar-nav">
@@ -244,11 +246,11 @@
             class="nav-content collapse"
             data-bs-parent="#sidebar-nav"
           >
-          <li>
-            <a href="{{ url_for('myteams') }}">
-              <i class="bi bi-circle"></i><span>My Teams</span>
-            </a>
-          </li>
+            <li>
+              <a href="{{ url_for('myteams') }}">
+                <i class="bi bi-circle"></i><span>My Teams</span>
+              </a>
+            </li>
             <li>
               <a href="{{ url_for('create') }}">
                 <i class="bi bi-circle"></i><span>Create Team</span>
@@ -267,8 +269,33 @@
       </ul>
     </aside>
     <!-- End Sidebar-->
+    {% else %}
+    <style>
+      @media (min-width: 1200px) {
+        #main,
+        #footer {
+          margin-left: 0px;
+        }
+      }
+    </style>
+    {% endif %}
 
-    <main id="main" class="main">{% block main %} {% endblock main %}</main>
+    <main id="main" class="main">
+      {% with messages = get_flashed_messages() %} {% if messages %} {% for
+      message in messages %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle me-1"></i>
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}{% block main %} {% endblock main %}
+    </main>
     <!-- End #main -->
 
     <!-- ======= Footer ======= -->

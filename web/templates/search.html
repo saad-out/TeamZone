@@ -1,14 +1,11 @@
-{% extends "base.html" %}
-
-{% block title %}
+{% extends "base.html" %} {% block title %}
 <title>Search & Filter</title>
-{% endblock title %}
-
-{% block style %}
-<link href="{{ url_for('static', filename='styles/filter.css') }}" rel="stylesheet" />
-{% endblock style%}
-
-{% block main %}
+{% endblock title %} {% block style %}
+<link
+  href="{{ url_for('static', filename='styles/filter.css') }}"
+  rel="stylesheet"
+/>
+{% endblock style%} {% block main %}
 <div class="row">
   <div class="col-xl-3">
     <div class="p-2 ms-md-4 ms-sm-2 border" style="background-color: white">
@@ -16,22 +13,40 @@
       <div class="box border-bottom">
         <div class="box-label text-uppercase d-flex align-items-center">
           Country
-          <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#inner-box1"
-            aria-expanded="false" aria-controls="inner-box1">
+          <button
+            class="btn ms-auto"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#inner-box1"
+            aria-expanded="false"
+            aria-controls="inner-box1"
+          >
             <span class="bi bi-plus"></span>
           </button>
         </div>
-
-        <div>
-          <input type="text" id="country-search" placeholder="Search countries" style="width: 150px;">
-        </div>
-        <div id="country-list-container" style="height: 150px; overflow-y: auto;">
-          <div id="inner-box1" class="collapse show">
+        <div id="inner-box1" class="collapse show">
+          <div>
+            <input
+              type="text"
+              id="country-search"
+              placeholder="Search countries"
+              style="width: 150px"
+            />
+          </div>
+          <div
+            id="country-list-container"
+            style="height: 150px; overflow-y: auto"
+          >
             {% for country in countries %}
             <div class="my-1 country-item">
-              <label class="tick">{{ country.name }}
-                <input data-id="{{ country.id }}" data-name="{{ country.name }}" type="checkbox"
-                  class="filter-checkbox country" />
+              <label class="tick"
+                >{{ country.name }}
+                <input
+                  data-id="{{ country.id }}"
+                  data-name="{{ country.name }}"
+                  type="checkbox"
+                  class="filter-checkbox country"
+                />
                 <span class="check"></span>
               </label>
             </div>
@@ -40,25 +55,40 @@
         </div>
       </div>
 
-
       <div class="box border-bottom">
         <div class="box-label text-uppercase d-flex align-items-center">
           City
-          <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#inner-box2"
-            aria-expanded="false" aria-controls="inner-box2">
+          <button
+            class="btn ms-auto"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#inner-box2"
+            aria-expanded="false"
+            aria-controls="inner-box2"
+          >
             <span class="bi bi-plus"></span>
           </button>
         </div>
-        <div>
-          <input type="text" id="city-search" placeholder="Search cities" style="width: 150px;">
-        </div>
-        <div id="city-list-container" style="height: 150px; overflow-y: auto;">
-          <div id="inner-box2" class="collapse show">
+        <div id="inner-box2" class="collapse show">
+          <div>
+            <input
+              type="text"
+              id="city-search"
+              placeholder="Search cities"
+              style="width: 150px"
+            />
+          </div>
+          <div id="city-list-container" style="height: 150px; overflow-y: auto">
             {% for city in cities %}
-            <div class="my-1">
-              <label class="tick">{{ city.name }}
-                <input data-id="{{ city.id }}" data-name="{{ city.name }}" type="checkbox"
-                  class="filter-checkbox city" />
+            <div class="my-1 city-item">
+              <label class="tick"
+                >{{ city.name }}
+                <input
+                  data-id="{{ city.id }}"
+                  data-name="{{ city.name }}"
+                  type="checkbox"
+                  class="filter-checkbox city"
+                />
                 <span class="check"></span>
               </label>
             </div>
@@ -70,22 +100,40 @@
       <div class="box">
         <div class="box-label text-uppercase d-flex align-items-center">
           Sport
-          <button class="btn ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#inner-box3"
-            aria-expanded="false" aria-controls="inner-box3">
+          <button
+            class="btn ms-auto"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#inner-box3"
+            aria-expanded="false"
+            aria-controls="inner-box3"
+          >
             <span class="bi bi-plus"></span>
           </button>
         </div>
-
-        <div>
-          <input type="text" id="sport-search" placeholder="Search sports" style="width: 150px;">
-        </div>
-        <div id="sport-list-container" style="height: 150px; overflow-y: auto;">
-          <div id="inner-box3" class="collapse show">
+        <div id="inner-box3" class="collapse show">
+          <div>
+            <input
+              type="text"
+              id="sport-search"
+              placeholder="Search sports"
+              style="width: 150px"
+            />
+          </div>
+          <div
+            id="sport-list-container"
+            style="height: 150px; overflow-y: auto"
+          >
             {% for sport in sports %}
-            <div class="my-1">
-              <label class="tick">{{ sport.name }}
-                <input data-id="{{ sport.id }}" data-name="{{ sport.name }}" type="checkbox"
-                  class="filter-checkbox sport" />
+            <div class="my-1 sport-item">
+              <label class="tick"
+                >{{ sport.name }}
+                <input
+                  data-id="{{ sport.id }}"
+                  data-name="{{ sport.name }}"
+                  type="checkbox"
+                  class="filter-checkbox sport"
+                />
                 <span class="check"></span>
               </label>
             </div>
@@ -97,12 +145,30 @@
   </div>
   <div class="col-xl-9">
     <div class="input-group mb-3">
-      <input type="text" class="form-control countriesShow" placeholder="Select countries" aria-label="Countries' name"
-        aria-describedby="button-addon2" disabled />
-      <input type="text" class="form-control citiesShow" placeholder="Select cities" aria-label="Cities' name"
-        aria-describedby="button-addon2" disabled />
-      <input type="text" class="form-control sportsShow" placeholder="Select sports" aria-label="Sports' name"
-        aria-describedby="button-addon2" disabled />
+      <input
+        type="text"
+        class="form-control countriesShow"
+        placeholder="Select countries"
+        aria-label="Countries' name"
+        aria-describedby="button-addon2"
+        disabled
+      />
+      <input
+        type="text"
+        class="form-control citiesShow"
+        placeholder="Select cities"
+        aria-label="Cities' name"
+        aria-describedby="button-addon2"
+        disabled
+      />
+      <input
+        type="text"
+        class="form-control sportsShow"
+        placeholder="Select sports"
+        aria-label="Sports' name"
+        aria-describedby="button-addon2"
+        disabled
+      />
 
       <button class="btn btn-primary" type="button" id="search-btn">
         Search
@@ -114,6 +180,5 @@
   </div>
 </div>
 {% endblock main %} {% block script %}
-<script src="{{ url_for('static', filename='scripts/search.js')}}">
-</script>
+<script src="{{ url_for('static', filename='scripts/search.js')}}"></script>
 {% endblock %}
