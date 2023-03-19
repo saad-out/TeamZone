@@ -1,9 +1,9 @@
-import os
 from web.app import app
 
 from flask import render_template, request, url_for, redirect, flash
 from flask_login import login_required, current_user
 from models import storage, City, Country, Sport, Team, User
+from .utils import save_image
 
 @app.route('/change_password', methods=['POST'])
 @login_required
@@ -25,23 +25,14 @@ def change_password():
 @app.route('/profile_edit', methods=['POST'])
 @login_required
 def profile_edit():
-    upload_folder = "web/static/images/users"
     name = request.form.get('name')
     username = request.form.get('username')
     email = request.form.get('email')
-    allowed_filetypes = {'png', 'jpg', 'jpeg'}
     filename = ''
     reset = 'reset-picture' in request.form
     if not reset:
         image = request.files['image']
-        if image.filename != "":
-            filetype = image.filename.split(".")[1].lower()
-            if filetype not in allowed_filetypes:
-                flash("Invalid filetype")
-                return redirect(url_for('profile'))
-            filename = current_user.id + '.' + filetype
-            upload_path = os.path.join(upload_folder, filename)
-            image.save(upload_path)
+        filename = save_image(image, 'users', current_user.id)
     else:
         filename = "user_default.jpg"
     user = storage.get(User, current_user.id)
@@ -50,7 +41,6 @@ def profile_edit():
             user.name = name
             user.email = email
             user.username = username
-            print(filename)
             if filename != "":
                 user.image = filename
             user.save()
