@@ -1,7 +1,7 @@
 from PIL import Image
 from web.app import app
 import os
-from flask import redirect, url_for
+from flask import redirect, url_for, flash
 
 def save_image(image, directory, id):
     allowed_filetypes = {'.png', '.jpg', '.jpeg'}
