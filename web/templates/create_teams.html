@@ -24,20 +24,14 @@
   </div>
   <div class="col-md-6">
     <label for="teamcountry" class="form-label">Country</label>
-    <select id="teamcountry" class="form-select" name="countryid">
+    <select id="teamcountry" class="form-select" name="country">
       <option selected value="">Choose...</option>
-      {% for country in countries %}
-      <option value="{{ country.id }}">{{ country.name }}</option>
-      {% endfor %}
     </select>
   </div>
   <div class="col-md-6">
     <label for="teamcity" class="form-label">City</label>
-    <select id="teamcity" class="form-select" name="cityid">
+    <select id="teamcity" class="form-select" name="city">
       <option selected value="">Choose...</option>
-      {% for city in cities %}
-      <option value="{{ city.id }}">{{ city.name }}</option>
-      {% endfor %}
     </select>
   </div>
   <div class="col-md-12">
@@ -54,4 +48,7 @@
   </div>
 </form>
 
-{% endblock main %} {% block script %} {% endblock %}
+{% endblock main %} 
+{% block script %}
+<script src="{{ url_for('static', filename='scripts/create.js')}}"></script>
+{% endblock %}
