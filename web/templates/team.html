@@ -1,12 +1,19 @@
-{% extends "base.html" %} {% block title %}
+{% extends "base.html" %} 
+
+{% block title %}
 <title>Team Info</title>
-{% endblock title %} {% block style %}
+{% endblock title %} 
+
+{% block style %}
 <style>
   #edit-team {
     display: none;
   }
 </style>
-{% endblock style %} {% block main %} {% if edit %}
+{% endblock style %} 
+
+{% block main %} 
+{% if edit %}
 <div class="row mb-2">
   <div class="col-xl-12">
     <button id="toggle-btn" type="button" class="btn btn-primary float-end">
@@ -14,6 +21,7 @@
     </button>
   </div>
 </div>
+{% endif %}
 
 <!-- Multi Columns Form -->
 <form
@@ -41,37 +49,43 @@
       class="form-control"
       style="height: 100px"
     >
-{{ team.bio }}</textarea
-    >
+    {{ team.bio }}
+    </textarea>
   </div>
   <div class="col-md-6">
     <label for="teamcountry" class="form-label">Country</label>
     <select id="teamcountry" class="form-select" name="countryid">
-      {% for country in countries %} {% if team.city.country_id == country.id %}
+      {% for country in countries %} 
+      {% if team.city.country_id == country.id %}
       <option value="{{ country.id }}" selected>{{ country.name }}</option>
       {% else %}
       <option value="{{ country.id }}">{{ country.name }}</option>
-      {% endif %} {% endfor %}
+      {% endif %}
+      {% endfor %}
     </select>
   </div>
   <div class="col-md-6">
     <label for="teamcity" class="form-label">City</label>
     <select id="teamcity" class="form-select" name="cityid">
-      {% for city in cities %} {% if team.city_id == city.id %}
+      {% for city in cities %} 
+      {% if team.city_id == city.id %}
       <option value="{{ city.id }}" selected>{{ city.name }}</option>
       {% else %}
       <option value="{{ city.id }}">{{ city.name }}</option>
-      {% endif %} {% endfor %}
+      {% endif %} 
+      {% endfor %}
     </select>
   </div>
   <div class="col-md-12">
     <label for="teamsport" class="form-label">Sport</label>
     <select id="teamsport" class="form-select" name="sportid">
-      {% for sport in sports %} {% if team.sport_id == sport.id %}
+      {% for sport in sports %}
+      {% if team.sport_id == sport.id %}
       <option value="{{ sport.id }}" selected>{{ sport.name }}</option>
       {% else %}
       <option value="{{ sport.id }}">{{ sport.name }}</option>
-      {% endif %} {% endfor %}
+      {% endif %} 
+      {% endfor %}
     </select>
   </div>
   <div class="col-md-12">
@@ -101,7 +115,6 @@
     <button type="submit" class="btn btn-primary">Update Team</button>
   </div>
 </form>
-{% endif %}
 <section id="team-info">
   <div class="row">
     <div class="col-md-6">
@@ -154,6 +167,7 @@
   </div>
 </section>
 
-{% endblock main %} {% block script %}
+{% endblock main %} 
+{% block script %}
 <script src="{{ url_for('static', filename='scripts/team.js')}}"></script>
 {% endblock script %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %} 
+
+{% block title %}
+<title>Dashboard</title>
+{% endblock title %} 
+
+{% block main %}
+{% if team_invitations %}
+{% for invitation in team_invitations %}
+  <div class="notification">
+    <p>{{ invitation.sender.name }} invited you to join their team {{ invitation.team.name }}.</p>
+    <button class="accept" data-invitation-id="{{ invitation.id }}">Accept</button>
+    <button class="decline" data-invitation-id="{{ invitation.id }}">Decline</button>
+  </div>
+{% endfor %}
+{% else %}
+  <h2>You have no team invitations</h2>
+{% endif %}
+{% if game_invitations %}
+{% for invitation in game_invitations %}
+  <div class="notification">
+    <p>Leader {{ invitation.sender_team.leader.name }} of team {{ invitation.sender_team.name }} invited you to Play a game with your team {{ invitation.receiver_team.name }}.</p>
+    <button class="accept" data-invitation-id="{{ invitation.id }}">Accept</button>
+    <button class="decline" data-invitation-id="{{ invitation.id }}">Decline</button>
+  </div>
+{% endfor %}
+{% else %}
+  <h2>You have no game invitations</h2>
+{% endif %}
+{% endblock main %}

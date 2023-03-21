@@ -1,95 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- bootstrap -->
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    {% block title %}
+    <title>Dashboard</title>
+    {% endblock title %}
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Logo -->
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      href="{{ url_for('static', filename='images/app_logo.png') }}"
+      rel="icon"
+    />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
       rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+    />
+
+    <!-- Template Main CSS File -->
+    <link
+      href="{{ url_for('static', filename='styles/login.css') }}"
+      rel="stylesheet"
+    />
+
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
-    <!-- css -->
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='styles/login.css') }}"
-    />
     <!-- JS -->
     <script src="{{ url_for('static', filename='scripts/login.js') }}"></script>
-    <!-- JS -->
-    <!-- font awesome-->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-    />
-    <!-- tab logo -->
-    <link
-      rel="icon"
-      type="image/png"
-      href="{{ url_for('static', filename='images/app_logo.png') }}"
-      sizes="32x32"
-    />
-    <title>TeamZone</title>
+
+    {% block style %} {% endblock style %}
   </head>
 
   <body>
-    <!-- navigation -->
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light">
-      <div class="teamzone-logo"></div>
-      <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url_for('landing_page') }}">
-          <h1 class="name"><i>TeamZone</i></h1>
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+      <div class="d-flex align-items-center justify-content-between">
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+        <a
+          href="{{ url_for('signout', next=url_for('landing_page')) }}"
+          class="logo d-flex align-items-center"
         >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                aria-current="page"
-                href="{{ url_for('landing_page') }}"
-                >Home</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('landing_page') }}#features"
-                >Features</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('landing_page') }}#about"
-                >About</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                aria-current="page"
-                href="{{ url_for('search') }}"
-                >Start</a
-              >
-            </li>
-          </ul>
-        </div>
+          <img
+            src="{{ url_for('static', filename='images/app_logo.png') }}"
+            alt=""
+          />
+          <span class="d-none d-lg-block">TeamZone</span>
+        </a>
       </div>
-    </nav>
+      <!-- End Logo -->
 
-    <div class="main">
+      <nav class="header-nav ms-auto">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#features">Features</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#contributors">Contributors</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="{{ url_for('search') }}">Start</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </nav>
+      <!-- End Icons Navigation -->
+    </header>
+    <!-- End Header -->
+    <style>
+      @media (min-width: 1200px) {
+        #main,
+        #footer {
+          margin-left: 0px;
+        }
+      }
+    </style>
+
+    <<div class="main">
       <div class="details" style="margin-top: 10px;">
         <h2>Join Us! Registerd or Unknown</h2>
         <p>
@@ -182,87 +198,34 @@
         </div>
       </div>
     </div>
+      
+      
+    <!-- End #main -->
 
-    <footer
-      class="text-center text-white"
-      style="background-color: rgba(182, 167, 34, 0.271)"
-    >
-      <!-- Grid container -->
-      <div class="container pt-4">
-        <!-- Section: Social media -->
-        <section class="mb-4">
-          <!-- Facebook -->
-          <a
-            class="btn btn-link btn-floating btn-lg text-dark m-1"
-            href="#!"
-            role="button"
-            data-mdb-ripple-color="dark"
-            ><i class="fab fa-facebook-f"></i
-          ></a>
-
-          <!-- Twitter -->
-          <a
-            class="btn btn-link btn-floating btn-lg text-dark m-1"
-            href="#!"
-            role="button"
-            data-mdb-ripple-color="dark"
-            ><i class="fab fa-twitter"></i
-          ></a>
-
-          <!-- Google -->
-          <a
-            class="btn btn-link btn-floating btn-lg text-dark m-1"
-            href="#!"
-            role="button"
-            data-mdb-ripple-color="dark"
-            ><i class="fab fa-google"></i
-          ></a>
-
-          <!-- Instagram -->
-          <a
-            class="btn btn-link btn-floating btn-lg text-dark m-1"
-            href="#!"
-            role="button"
-            data-mdb-ripple-color="dark"
-            ><i class="fab fa-instagram"></i
-          ></a>
-
-          <!-- Linkedin -->
-          <a
-            class="btn btn-link btn-floating btn-lg text-dark m-1"
-            href="#!"
-            role="button"
-            data-mdb-ripple-color="dark"
-            ><i class="fab fa-linkedin"></i
-          ></a>
-          <!-- Github -->
-          <a
-            class="btn btn-link btn-floating btn-lg text-dark m-1"
-            href="#!"
-            role="button"
-            data-mdb-ripple-color="dark"
-            ><i class="fab fa-github"></i
-          ></a>
-        </section>
-        <!-- Section: Social media -->
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Team Zone</span></strong
+        >. All Rights Reserved
       </div>
-      <!-- Grid container -->
-
-      <!-- Copyright -->
-      <div
-        class="text-center text-dark p-3"
-        style="background-color: rgba(0, 0, 0, 0.2)"
-      >
-        © 2023 Copyright:
-        <a class="text-dark" href="https://mdbootstrap.com/">teamzone.tech</a>
-      </div>
-      <!-- Copyright -->
     </footer>
-    
+    <!-- End Footer -->
+
+    <a
+      href="#"
+      class="back-to-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+
+    <!-- Vendor JS Files -->
     <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
+    {% block script %} {% endblock %}
   </body>
 </html>

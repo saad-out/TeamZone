@@ -20,9 +20,9 @@ The application can be configured with the following environment variables:
 - `DATABASE_URL`: The URL for the application's database (default is `sqlite:///data.db`).
 
 Usage:
-To start the application, simply run this module directly:
+To start the application, run it the module from the main folder:
 
-    $ python app.py
+    $ python -m api.v1.app
 
 The application will be available at http://localhost:5001/.
 """

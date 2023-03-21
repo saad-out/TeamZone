@@ -1,85 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- bootstrap -->
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    {% block title %}
+    <title>Dashboard</title>
+    {% endblock title %}
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Logo -->
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      href="{{ url_for('static', filename='images/app_logo.png') }}"
+      rel="icon"
+    />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
       rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+    />
+
+    <!-- Template Main CSS File -->
+    <link
+      href="{{ url_for('static', filename='styles/style.css') }}"
+      rel="stylesheet"
+    />
+
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
-    <!-- css -->
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='styles/landing.css') }}"
-    />
-    <!-- JS -->
-    <!-- font awesome-->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-    />
-    <!-- tab logo -->
-    <link
-      rel="icon"
-      type="image/png"
-      href="{{ url_for('static', filename='images/app_logo.png') }}"
-      sizes="32x32"
-    />
-    <title>TeamZone</title>
+    {% block style %} {% endblock style %}
   </head>
 
   <body>
-    <!-- navigation -->
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light">
-      <div class="teamzone-logo"></div>
-      <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url_for('landing_page') }}">
-          <h1 class="name"><i>TeamZone</i></h1>
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+      <div class="d-flex align-items-center justify-content-between">
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+        <a
+          href="{{ url_for('signout', next=url_for('landing_page')) }}"
+          class="logo d-flex align-items-center"
         >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#features">Features</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#about">About</a>
-            </li>
-            <li class="nav-item">
-              <!-- <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
-              <a
-                class="nav-link active"
-                aria-current="page"
-                href="{{ url_for('login') }}"
-                >Begin</a
-              >
-            </li>
-          </ul>
-        </div>
+          <img
+            src="{{ url_for('static', filename='images/app_logo.png') }}"
+            alt=""
+          />
+          <span class="d-none d-lg-block">TeamZone</span>
+        </a>
       </div>
-    </nav>
+      <!-- End Logo -->
 
-    <section class="main">
+      <nav class="header-nav ms-auto">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#features">Features</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#contributors">Contributors</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="{{ url_for('login') }}">Begin</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </nav>
+      <!-- End Icons Navigation -->
+    </header>
+    <!-- End Header -->
+    <style>
+      @media (min-width: 1200px) {
+        #main,
+        #footer {
+          margin-left: 0px;
+        }
+      }
+    </style>
+
+    {% block main %}
+    <main id="main" class="main">      
       <section class="description">
         <h3>
           Build Your Team And<br />
@@ -90,205 +114,182 @@
             >Join the community of sports enthusiasts, create your team, search
             for other teams and compete with each other. <br />
             <br />
-            New to the area or need new opponents ?<br />Dive in and connect
+            New to the area or need new opponents&nbsp;? Dive in and connect
             with your local athletes.</b
           >
         </p>
       </section>
-    </section>
+    </main>
+    {% endblock main %}
+    
 
-    <section class="cards" id="features">
-      <h2 class="title">Features</h2>
-      <div class="content">
-        <div class="card">
-          <div class="info">
-            <h3>Find sports teams</h3>
-            <p>
-              Search for teams based on sport, location, availability and more.
-            </p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="info">
-            <h3>Create your team</h3>
-            <p>
-              Sign up and build your team from scratch, add your teammates and
-              practice your sport.
-            </p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="info">
-            <h3>Compete with other teams</h3>
-            <p>
-              Reach out to other teams from your local area , or get invitations
-              from others to organize games and have fun.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="aboutus-section" id="about">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="aboutus">
-              <h2 class="aboutus-title">About</h2>
-              <p class="aboutus-text">
-                This web application <b>`TeamZone`</b> is a portfolio project
-                for the foundations section of the ALX Software engineering
-                program.
+      <section class="cards-features" id="features">
+        <h2 class="title">Features</h2>
+        <div class="content">
+          <div class="card-features">
+            <div class="info">
+              <h3>Find sports teams</h3>
+              <p>
+                Search for teams based on sport, location, availability and more.
               </p>
-              <p class="aboutus-text">
-                Starting from the ground up with no programming background
-                required, this project is the result of 9 months of learning.
-                Beginning with the very basics of programming, then advancing to
-                cover every aspect of the web including the Front-End, Back-End
-                and DevOps parts of an application.
-              </p>
-              <a
-                class="aboutus-more"
-                href="https://www.alxafrica.com/software-engineering/"
-                target="_blank"
-                >read more</a
-              >
             </div>
           </div>
-          <div class="col-md-3 col-sm-6 col-xs-12"></div>
-          <div class="col-md-5 col-sm-6 col-xs-12">
-            <div class="feature">
-              <div class="feature-box">
-                <div class="clearfix">
-                  <div class="iconset">
-                    <span class="glyphicon glyphicon-cog icon"></span>
-                  </div>
-                  <div class="feature-content">
-                    <h4>Front-End</h4>
-                    <p>
-                      This app's UI is created using raw HTML & CSS with some
-                      Bootstrap built-in components. The interactivity is based
-                      on JavaScirpt (JQuery).
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="feature-box">
-                <div class="clearfix">
-                  <div class="iconset">
-                    <span class="glyphicon glyphicon-cog icon"></span>
-                  </div>
-                  <div class="feature-content">
-                    <h4>Back-End</h4>
-                    <p>
-                      We used Flask (Python) as a Back-End framework, storing
-                      our data in MySQL DBMS using the sqlalchemy ORM.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="feature-box">
-                <div class="clearfix">
-                  <div class="iconset">
-                    <span class="glyphicon glyphicon-cog icon"></span>
-                  </div>
-                  <div class="feature-content">
-                    <h4>DevOps</h4>
-                    <p>
-                      Our infrastructure consists of two Nginx web servers
-                      sitting behind an HAProxy load balancer. Forwarding
-                      requests to our JavaScirpt code which communicates with
-                      the Back-End using RESTful APIs.
-                    </p>
-                  </div>
-                </div>
-              </div>
+          <div class="card-features">
+            <div class="info">
+              <h3>Create your team</h3>
+              <p>
+                Sign up and build your team from scratch, add your teammates and
+                practice your sport.
+              </p>
+            </div>
+          </div>
+          <div class="card-features">
+            <div class="info">
+              <h3>Compete with other teams</h3>
+              <p>
+                Reach out to other teams from your local area , or get invitations
+                from others to organize games and have fun.
+              </p>
             </div>
           </div>
         </div>
+      </section>
+
+      <div class="aboutus-section" id="about">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="aboutus">
+                <h2 class="aboutus-title">About</h2>
+                <p class="aboutus-text">
+                  This web application <b>`TeamZone`</b> is a portfolio project
+                  for the foundations section of the ALX Software engineering
+                  program.
+                </p>
+                <p class="aboutus-text">
+                  Starting from the ground up with no programming background
+                  required, this project is the result of 9 months of learning.
+                  Beginning with the very basics of programming, then advancing to
+                  cover every aspect of the web including the Front-End, Back-End
+                  and DevOps parts of an application.
+                </p>
+                <a
+                  class="aboutus-more"
+                  href="https://www.alxafrica.com/software-engineering/"
+                  target="_blank"
+                  >read more</a
+                >
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12"></div>
+            <div class="col-md-5 col-sm-6 col-xs-12">
+              <div class="feature">
+                <div class="feature-box">
+                  <div class="clearfix">
+                    <div class="iconset">
+                      <span class="glyphicon glyphicon-cog icon"></span>
+                    </div>
+                    <div class="feature-content">
+                      <h4>Front-End</h4>
+                      <p>
+                        This app's UI is created using raw HTML & CSS with some
+                        Bootstrap built-in components. The interactivity is based
+                        on JavaScirpt (JQuery).
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="feature-box">
+                  <div class="clearfix">
+                    <div class="iconset">
+                      <span class="glyphicon glyphicon-cog icon"></span>
+                    </div>
+                    <div class="feature-content">
+                      <h4>Back-End</h4>
+                      <p>
+                        We used Flask (Python) as a Back-End framework, storing
+                        our data in MySQL DBMS using the sqlalchemy ORM.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="feature-box">
+                  <div class="clearfix">
+                    <div class="iconset">
+                      <span class="glyphicon glyphicon-cog icon"></span>
+                    </div>
+                    <div class="feature-content">
+                      <h4>DevOps</h4>
+                      <p>
+                        Our infrastructure consists of two Nginx web servers
+                        sitting behind an HAProxy load balancer. Forwarding
+                        requests to our JavaScirpt code which communicates with
+                        the Back-End using RESTful APIs.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <footer
-      class="text-center text-white"
-      style="background-color: rgba(182, 167, 34, 0.271)"
-    >
-      <!-- Grid container -->
-      <div class="container pt-4">
-        <!-- Section: Social media -->
-        <section class="mb-4">
-          <!-- Facebook -->
-          <a
-            class="btn btn-link btn-floating btn-lg text-dark m-1"
-            href="#!"
-            role="button"
-            data-mdb-ripple-color="dark"
-            ><i class="fab fa-facebook-f"></i
-          ></a>
+      <section class="contributors py-5" id="contributors" style="background-color: white;">
+        <h2 class="contributors-title">Contributors</h2>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 col-lg-6 mb-4 mb-md-0 text-center">
+              <h5 class="mb-3"><b>Saad Out</b></h5>
+              <div class="d-flex justify-content-center">
+                <a href="https://github.com/saad-out" target="_blank" class="btn btn-outline-secondary me-2"><i class="bi bi-github"></i></a>
+                <a href="https://twitter.com/saadout1" target="_blank" class="btn btn-outline-secondary me-2"><i class="bi bi-twitter"></i></a>
+                <a href="https://www.linkedin.com/in/saad-outchakoucht-1193b923b/" target="_blank" class="btn btn-outline-secondary"><i class="bi bi-linkedin"></i></a>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-6 text-center">
+              <h5 class="mb-3"><b>Yusuf Yusuf</b></h5>
+              <div class="d-flex justify-content-center">
+                <a href="https://github.com/koredeycode" target="_blank" class="btn btn-outline-secondary me-2"><i class="bi bi-github"></i></a>
+                <a href="#" target="_blank" class="btn btn-outline-secondary me-2"><i class="bi bi-twitter"></i></a>
+                <a href="#" target="_blank" class="btn btn-outline-secondary"><i class="bi bi-linkedin"></i></a>
+              </div>
+            </div>
+            <div class="col-md-12 text-center mt-4">
+              <h4 class="mb-3"><b>TeamZone</b></h4>
+              <a href="https://github.com/saad-out/TeamZone" target="_blank" class="btn btn-outline-secondary btn-lg"><i class="bi bi-github fs-2"></i></a>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      
+    <!-- End #main -->
 
-          <!-- Twitter -->
-          <a
-            class="btn btn-link btn-floating btn-lg text-dark m-1"
-            href="#!"
-            role="button"
-            data-mdb-ripple-color="dark"
-            ><i class="fab fa-twitter"></i
-          ></a>
-
-          <!-- Google -->
-          <a
-            class="btn btn-link btn-floating btn-lg text-dark m-1"
-            href="#!"
-            role="button"
-            data-mdb-ripple-color="dark"
-            ><i class="fab fa-google"></i
-          ></a>
-
-          <!-- Instagram -->
-          <a
-            class="btn btn-link btn-floating btn-lg text-dark m-1"
-            href="#!"
-            role="button"
-            data-mdb-ripple-color="dark"
-            ><i class="fab fa-instagram"></i
-          ></a>
-
-          <!-- Linkedin -->
-          <a
-            class="btn btn-link btn-floating btn-lg text-dark m-1"
-            href="#!"
-            role="button"
-            data-mdb-ripple-color="dark"
-            ><i class="fab fa-linkedin"></i
-          ></a>
-          <!-- Github -->
-          <a
-            class="btn btn-link btn-floating btn-lg text-dark m-1"
-            href="#!"
-            role="button"
-            data-mdb-ripple-color="dark"
-            ><i class="fab fa-github"></i
-          ></a>
-        </section>
-        <!-- Section: Social media -->
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Team Zone</span></strong
+        >. All Rights Reserved
       </div>
-      <!-- Grid container -->
-
-      <!-- Copyright -->
-      <div
-        class="text-center text-dark p-3"
-        style="background-color: rgba(0, 0, 0, 0.2)"
-      >
-        © 2023 Copyright:
-        <a class="text-dark" href="https://mdbootstrap.com/">teamzone.tech</a>
-      </div>
-      <!-- Copyright -->
     </footer>
+    <!-- End Footer -->
 
+    <a
+      href="#"
+      class="back-to-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+
+    <!-- Vendor JS Files -->
     <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
+    {% block script %} {% endblock %}
   </body>
 </html>

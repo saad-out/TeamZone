@@ -1,3 +1,8 @@
+"""
+This module contains helper functions needed by other Flask app component such as the views.
+
+See the views code for more detailed information on each method and its expected input and output.
+"""
 from PIL import Image
 from web.app import app
 import os
