@@ -95,3 +95,8 @@ def profile():
     A rendered HTML template for the profile page, displaying the user's information.
     """
     return render_template('profile.html')
+
+
+@app.route('/invites', methods=['POST'])
+def invites():
+    return "OK"

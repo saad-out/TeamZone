@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Module containing Notification class for representing a team invite"""
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, ForeignKey, Boolean, Text
+from sqlalchemy import Column, String, ForeignKey, Boolean, Text, Enum
 from sqlalchemy.orm import relationship
 
 class TeamInvite(BaseModel, Base):
@@ -22,7 +22,7 @@ class TeamInvite(BaseModel, Base):
     sender_id = Column(String(60), ForeignKey("users.id"), nullable=False)
     receiver_id = Column(String(60), ForeignKey("users.id"), nullable=False)
     team_id = Column(String(60), ForeignKey("teams.id"), nullable=False)
-    accepted = Column(Boolean, default=False)
+    status = Column(Enum('pending', 'accepted', 'declined', name='team_invite_status'), default='pending')
     message = Column(Text)
 
     sender = relationship("User", foreign_keys=[sender_id])

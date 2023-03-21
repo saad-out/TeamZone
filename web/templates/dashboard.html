@@ -5,26 +5,114 @@
 {% endblock title %} 
 
 {% block main %}
-{% if team_invitations %}
-{% for invitation in team_invitations %}
-  <div class="notification">
-    <p>{{ invitation.sender.name }} invited you to join their team {{ invitation.team.name }}.</p>
-    <button class="accept" data-invitation-id="{{ invitation.id }}">Accept</button>
-    <button class="decline" data-invitation-id="{{ invitation.id }}">Decline</button>
+
+<div class="team-invites" style="margin: 10px;">
+  <h2>Team invitations</h2>
+  {% if team_invitations %}
+  {% for invitation in team_invitations %}
+    <!-- <div class="notification">
+      <p>{{ invitation.sender.name }} invited you to join their team {{ invitation.team.name }}.</p>
+      <button class="accept" data-invitation-id="{{ invitation.id }}">Accept</button>
+      <button class="decline" data-invitation-id="{{ invitation.id }}">Decline</button>
+    </div> -->
+    <div class="card my-3" style="background-color: #f2f2f2;">
+      <div class="card-body" style="font-family: 'Helvetica Neue', sans-serif;">
+        <div class="d-flex align-items-center justify-content-start mb-3">
+          <i class="bi bi-envelope-fill fs-4 me-2"></i>
+          <h4 class="card-title mb-0">Team Invitation</h4>
+        </div>
+        <p class="card-text mb-4">{{ invitation.sender.name }} invited you to join his team {{ invitation.team.name }}.</p>
+        <h6>Message:</h6>
+        <p>{{ invitation.message }}</p>
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-success me-3 px-4 accept-btn" type="button" data-invitation-id="{{ invitation.id }}">Accept</button>
+          <button class="btn btn-danger px-4 decline-btn" type="button" data-invitation-id="{{ invitation.id }}">Decline</button>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  {% else %}
+  <div class="alert alert-info" role="alert">
+    You have no team invitations for the moment.
   </div>
-{% endfor %}
-{% else %}
-  <h2>You have no team invitations</h2>
-{% endif %}
-{% if game_invitations %}
-{% for invitation in game_invitations %}
-  <div class="notification">
-    <p>Leader {{ invitation.sender_team.leader.name }} of team {{ invitation.sender_team.name }} invited you to Play a game with your team {{ invitation.receiver_team.name }}.</p>
-    <button class="accept" data-invitation-id="{{ invitation.id }}">Accept</button>
-    <button class="decline" data-invitation-id="{{ invitation.id }}">Decline</button>
+  {% endif %}
+</div>
+
+<div class="game-invites" style="margin: 10px">
+  <h2>Game invitations</h2>
+  {% if game_invitations %}
+  {% for invitation in game_invitations %}
+    <div class="card my-3" style="background-color: #f2f2f2;">
+      <div class="card-body" style="font-family: 'Helvetica Neue', sans-serif;">
+        <div class="d-flex align-items-center justify-content-start mb-3">
+          <i class="bi bi-envelope-fill fs-4 me-2"></i>
+          <h4 class="card-title mb-0">Game Invitation</h4>
+        </div>
+        <p class="card-text mb-4">Leader {{ invitation.sender_team.leader.name }} of team {{ invitation.sender_team.name }} invited you to Play a game with your team {{ invitation.receiver_team.name }}.</p>
+        <h6>Message:</h6>
+        <p>{{ invitation.message }}</p>
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-success me-3 px-4 accept-btn" type="button" data-invitation-id="{{ invitation.id }}">Accept</button>
+          <button class="btn btn-danger px-4 decline-btn" type="button" data-invitation-id="{{ invitation.id }}">Decline</button>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  {% else %}
+  <div class="alert alert-info" role="alert">
+    You have no game invitations for the moment.
   </div>
-{% endfor %}
-{% else %}
-  <h2>You have no game invitations</h2>
-{% endif %}
+  {% endif %}
+</div>
+
 {% endblock main %}
+
+{% block script %}
+<script>
+  $(document).ready(function() {
+      $('.accept-btn').click(function() {
+          const invitationId = $(this).data('invitation-id');
+          $.ajax({
+              url: '/invites',
+              method: 'POST',
+              data: JSON.stringify({
+                  invitation_id: invitationId,
+                  action: 'accept'
+              }),
+              contentType: 'application/json',
+              success: function(response) {
+                  // handle success response
+                  $('.accept-btn').remove();
+                  $('.decline-btn').remove();
+                  $('.d-flex.justify-content-end').append('<button class="btn btn-secondary px-4" type="button" disabled>Accepted</button>');
+              },
+              error: function(error) {
+                  console.error(error);
+              }
+          });
+      });
+
+      $('.decline-btn').click(function() {
+          const invitationId = $(this).data('invitation-id');
+          $.ajax({
+              url: '/invites',
+              method: 'POST',
+              data: JSON.stringify({
+                  invitation_id: invitationId,
+                  action: 'decline'
+              }),
+              contentType: 'application/json',
+              success: function(response) {
+                  // handle success response
+                  $('.accept-btn').remove();
+                  $('.decline-btn').remove();
+                  $('.d-flex.justify-content-end').append('<button class="btn btn-secondary px-4" type="button" disabled>Declined</button>');
+              },
+              error: function(error) {
+                  console.error(error);
+              }
+          });
+      });
+  });
+</script>
+{% endblock script %}
