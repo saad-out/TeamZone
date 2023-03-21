@@ -10,9 +10,9 @@ from models.country import Country
 from models.city import City
 from models.sport import Sport
 from models.team import Team
-from models.team_connection import TeamConnection
+from models.game_invite import GameInvite
 from models.user import User
-from models.notification import Notification
+from models.team_invite import TeamInvite
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from os import getenv
@@ -22,9 +22,9 @@ classes = {
     "City": City,
     "Sport": Sport,
     "Team": Team,
-    "TeamConnection": TeamConnection,
+    "GameInvite": GameInvite,
     "User": User,
-    "Notification": Notification
+    "TeamInvite": TeamInvite
 }
 
 class Storage:
@@ -147,7 +147,7 @@ class Storage:
 
         return count
     
-    def query(self, cls, attribute, value):
+    def query(self, cls, attribute, value, all=False):
         """
         Query object based on attribute
 
@@ -155,13 +155,19 @@ class Storage:
             cls: Object's class
             attribute: Object's attribute to filter by
             value: Value of `attribute`
+            all: Boolen to filer all or one object, default is False
         
-        Return: Object if exists or None
+        Return: all=False --> Object if exists
+                all=True  --> List of objects if exists
+                Or None
         """
         if cls not in classes.values():
             return None
         
         try:
-            return self.__session.query(cls).filter(getattr(cls, attribute) == value).first()
+            if all:
+                return self.__session.query(cls).filter(getattr(cls, attribute) == value).all()
+            else:
+                return self.__session.query(cls).filter(getattr(cls, attribute) == value).first()
         except AttributeError:
             return None

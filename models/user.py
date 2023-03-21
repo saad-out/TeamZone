@@ -27,7 +27,6 @@ class User(UserMixin, BaseModel, Base):
     email = Column(String(128), nullable=False, unique=True)
     password = Column(String(128), nullable=False)
     image = Column(String(128), default='user_default.jpg')
-    #bio = Column(Text)
     teams = relationship("Team", secondary="team_membership", overlaps='players')
     
     @property
@@ -39,13 +38,3 @@ class User(UserMixin, BaseModel, Base):
                 teams.append(team)
         
         return (teams)
-
-    @property
-    def notifications(self):
-        """Get notification for the user based on the teams the user is a leader"""
-        notifications = []
-        for team in self.leading_teams:
-            for notification in team.notifications:
-                if notification.status is False:
-                    notifications.append(notification)
-        return notifications

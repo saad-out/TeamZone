@@ -41,9 +41,9 @@ class Team(BaseModel, Base):
     city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)
     leader_id = Column(String(60), ForeignKey("users.id"), nullable=False)
     players = relationship("User", secondary="team_membership", viewonly=False)
-    notifications = relationship("Notification", backref="team", foreign_keys="[Notification.receiver_id]", cascade="all, delete, delete-orphan")
     
     leader = relationship("User", foreign_keys=[leader_id])
+    
 
     def to_dict(self):
         """Returns a dictionary of the instance"""
@@ -62,5 +62,5 @@ class Team(BaseModel, Base):
         new_dict["country"] = self.city.country.name
         new_dict["sport"] = self.sport.name
         new_dict["leader"] = self.leader.name
-
+        
         return new_dict
