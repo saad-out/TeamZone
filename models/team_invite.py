@@ -22,7 +22,7 @@ class TeamInvite(BaseModel, Base):
     sender_id = Column(String(60), ForeignKey("users.id"), nullable=False)
     receiver_id = Column(String(60), ForeignKey("users.id"), nullable=False)
     team_id = Column(String(60), ForeignKey("teams.id"), nullable=False)
-    status = Column(Enum('pending', 'accepted', 'declined', name='team_invite_status'), default='pending')
+    status = Column(Enum('pending', 'accepted', 'declined', 'seen', name='team_invite_status'), default='pending')
     message = Column(Text)
 
     sender = relationship("User", foreign_keys=[sender_id])

@@ -1,14 +1,30 @@
 """
-This module contains helper functions needed by other Flask app component such as the views.
+This module contains helper functions to be used by the app views.
 
-See the views code for more detailed information on each method and its expected input and output.
+Functions:
+    - save_image(image, directory, id): Saves an uploaded image to the static folder and returns the filename.
+    - update_invitations_status(response): Updates the status of invitations in the database after a request has been made.
 """
 from PIL import Image
 from web.app import app
 import os
-from flask import redirect, url_for, flash
+from flask import redirect, url_for, flash, g
 
 def save_image(image, directory, id):
+    """
+    Saves an uploaded image to the static folder and returns the filename.
+
+    Args:
+        image: The image to be saved, either as a PIL Image object or the path to the file.
+        director (str): The subdirectory within 'static/images' where the image should be saved.
+        id: The identifier to be used for the filename.
+
+    Returns:
+        str: The filename of the saved image.
+
+    Raises:
+        flash("Invalid filetype"): If the filetype is not supported.
+    """
     allowed_filetypes = {'.png', '.jpg', '.jpeg'}
     filename = ""
 
@@ -41,3 +57,30 @@ def save_image(image, directory, id):
 
         resized_image.save(upload_path)
     return filename
+
+
+@app.after_request
+def update_invitions_status(response):
+    """
+    Updates the status of invitations in the database after a request has been made.
+
+    Args:
+        response: The Flask response object.
+
+    Returns:
+        The updated Flask response object.
+
+    Notes:
+        This function is intended to be used as an after_request callback in the Flask app.
+        It checks if there are any invitation objects stored in the g variable, and if any of them have been
+        accepted or declined, it updates their status in the database to 'seen'.
+    """
+    if not g.get('invites'):
+        return response
+
+    if response.status_code == 200:
+        for invite in g.invites:
+            if invite.status in ['accepted', 'declined']:
+                invite.status = 'seen'
+                invite.save()
+    return response

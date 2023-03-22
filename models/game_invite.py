@@ -24,7 +24,7 @@ class GameInvite(BaseModel, Base):
     sender_team_id = Column(String(60), ForeignKey("teams.id"), nullable=False)
     receiver_team_id = Column(String(60), ForeignKey("teams.id"), nullable=False)
     game_date = Column(DateTime)
-    status = Column(Enum('pending', 'accepted', 'declined', name='game_invite_status'), default='pending')
+    status = Column(Enum('pending', 'accepted', 'declined', 'seen', name='game_invite_status'), default='pending')
     message = Column(Text)
 
     sender_team = relationship("Team", foreign_keys=[sender_team_id])

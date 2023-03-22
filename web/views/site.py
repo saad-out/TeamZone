@@ -12,7 +12,7 @@ See the views code for more detailed information on each method and its expected
 """
 from web.app import app
 
-from flask import render_template, redirect, flash, url_for
+from flask import render_template, redirect, flash, url_for, g
 from flask_login import login_required, current_user
 from models import storage, City, Country, Sport, Team, TeamInvite, GameInvite
 
@@ -36,15 +36,35 @@ def dashboard():
 
     Returns:
     A rendered HTML template for the dashboard page, including a list of game invitations and team invitations
-    received by the user.
+    sent & received by the user.
     """
-    user_leader_teams = storage.query(Team, "leader_id", current_user.id, all=True)
-    game_invitations = []
-    for team in user_leader_teams:
-        invites = storage.query(GameInvite, "receiver_team_id", team.id, all=True)
-        game_invitations.extend(invites)
-    team_invitations = storage.query(TeamInvite, "receiver_id", current_user.id, all=True)
-    return render_template('dashboard.html', game_invitations=game_invitations, team_invitations=team_invitations)
+    current_leader_teams = [team for team in current_user.teams if current_user.id == team.leader_id]
+    sent_team_invitations = storage.query(TeamInvite, "sender_id", current_user.id, all=True)
+    received_team_invitations = storage.query(TeamInvite, "receiver_id", current_user.id, all=True)
+
+    answered_team_invitations = []
+    pending_team_invitations = []
+    if sent_team_invitations:
+        answered_team_invitations += [invite for invite in sent_team_invitations if invite.status in ['accepted', 'declined']]
+    if received_team_invitations:
+        pending_team_invitations += [invite for invite in received_team_invitations if invite.status == 'pending']
+
+    answered_game_invitations = []
+    pending_game_invitations = []
+    for team in current_leader_teams:
+        sent_invites = storage.query(GameInvite, "sender_team_id", team.id, all=True)
+        if sent_invites:
+            answered_game_invitations += [invite for invite in sent_invites if invite.status in ['accepted', 'declined']]
+        received_invites = storage.query(GameInvite, "receiver_team_id", team.id, all=True)
+        if received_invites:
+            pending_game_invitations += [invite for invite in received_invites if invite.status == 'pending']
+
+    g.invites = answered_game_invitations + answered_team_invitations
+    return render_template('dashboard.html',
+                           game_invitations=pending_game_invitations,
+                           team_invitations=pending_team_invitations,
+                           game_notifications=answered_game_invitations,
+                           team_notifications=answered_team_invitations)
 
 
 @app.route('/search')
@@ -81,8 +101,13 @@ def team_info(id):
     cities = storage.all(City).values()
     countries = storage.all(Country).values()
     sports = storage.all(Sport).values()
-    edit = current_user.get_id() == team.leader_id
-    return render_template('team.html', team=team, cities=cities,countries=countries, sports=sports, edit=edit)
+
+    if not current_user.is_authenticated:
+        edit = connect = False
+    else:
+        edit = current_user.get_id() == team.leader_id
+        connect = team not in current_user.teams
+    return render_template('team.html', team=team, cities=cities,countries=countries, sports=sports, edit=edit, connect=connect)
 
 
 @app.route('/profile')
@@ -95,8 +120,3 @@ def profile():
     A rendered HTML template for the profile page, displaying the user's information.
     """
     return render_template('profile.html')
-
-
-@app.route('/invites', methods=['POST'])
-def invites():
-    return "OK"
