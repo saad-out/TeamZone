@@ -60,14 +60,15 @@ def edit_team(id):
             team.image = filename
         team.save()
         return redirect(url_for('team_info', id=team.id))
-    if not team:
+    if (not team) or (team not in current_user.teams):
         flash("Team not found")
         return redirect(url_for('myteams'))
     cities = storage.all(City).values()
     countries = storage.all(Country).values()
     sports = storage.all(Sport).values()
+
     edit = current_user.id == team.leader_id
-    return render_template('team.html', team=team, cities=cities, countries=countries, sports=sports, edit=edit)
+    return render_template('team.html', team=team, cities=cities, countries=countries, sports=sports, edit=edit, connect=False)
 
 @app.route('/myteams/create', methods=['GET', 'POST'])
 @login_required

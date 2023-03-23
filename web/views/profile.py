@@ -13,6 +13,8 @@ from flask import render_template, request, url_for, redirect, flash
 from flask_login import login_required, current_user
 from models import storage, City, Country, Sport, Team, User
 from .utils import save_image
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 @app.route('/change_password', methods=['POST'])
 @login_required
@@ -32,12 +34,13 @@ def change_password():
     if newpassword != renewpassword:
         flash("New password doesn't match")
         return redirect(url_for('profile'))
-    user = storage.get(User, current_user.id)
-    if user.password != password:
+    if not check_password_hash(current_user.password, password):
         flash("Incorrect password")
         return redirect(url_for('profile'))
-    user.password = newpassword
-    user.save()
+    current_user.password = generate_password_hash(newpassword)
+    current_user.save()
+
+    flash('Password changed successfully!', 'message')
     return redirect(url_for('profile'))
 
 

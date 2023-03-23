@@ -4,7 +4,7 @@ Class representing an invite connection between two teams.
 """
 
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, ForeignKey, Integer, DateTime, Boolean, Text
+from sqlalchemy import Column, String, ForeignKey, Integer, DateTime, Boolean, Text, Enum
 from sqlalchemy.orm import relationship
 
 class GameInvite(BaseModel, Base):
@@ -24,7 +24,7 @@ class GameInvite(BaseModel, Base):
     sender_team_id = Column(String(60), ForeignKey("teams.id"), nullable=False)
     receiver_team_id = Column(String(60), ForeignKey("teams.id"), nullable=False)
     game_date = Column(DateTime)
-    accepted = Column(Boolean, default=False)
+    status = Column(Enum('pending', 'accepted', 'declined', 'seen', name='game_invite_status'), default='pending')
     message = Column(Text)
 
     sender_team = relationship("Team", foreign_keys=[sender_team_id])

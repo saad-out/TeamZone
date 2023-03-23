@@ -5,26 +5,125 @@
 {% endblock title %} 
 
 {% block main %}
-{% if team_invitations %}
-{% for invitation in team_invitations %}
-  <div class="notification">
-    <p>{{ invitation.sender.name }} invited you to join their team {{ invitation.team.name }}.</p>
-    <button class="accept" data-invitation-id="{{ invitation.id }}">Accept</button>
-    <button class="decline" data-invitation-id="{{ invitation.id }}">Decline</button>
+
+<div style="margin: 10px 10px 80px 10px;">
+  <h2>Notifications:</h2>
+  {% if (not team_notifications) and (not game_notifications) %} 
+  <div class="alert alert-info" role="alert">
+    No notifications for the moment.
   </div>
-{% endfor %}
-{% else %}
-  <h2>You have no team invitations</h2>
-{% endif %}
-{% if game_invitations %}
-{% for invitation in game_invitations %}
-  <div class="notification">
-    <p>Leader {{ invitation.sender_team.leader.name }} of team {{ invitation.sender_team.name }} invited you to Play a game with your team {{ invitation.receiver_team.name }}.</p>
-    <button class="accept" data-invitation-id="{{ invitation.id }}">Accept</button>
-    <button class="decline" data-invitation-id="{{ invitation.id }}">Decline</button>
+  {% else %}
+  {% if team_notifications %}
+  <h3>Your team requests:</h3>
+  <div class="d-flex flex-wrap" style="display: flex;">
+  {% for notification in team_notifications %} 
+  {% if notification.status == 'accepted' %} 
+  <div class="card text-white mb-3">
+    <div class="card-header bg-success">Accepted Invitation</div>
+    <div class="card-body bg-light">
+      <h5 class="card-title" style="color: black;">{{ notification.receiver.name }} accepted the invitation to join your team {{ notification.team.name }}</h5>
+    </div>
   </div>
-{% endfor %}
-{% else %}
-  <h2>You have no game invitations</h2>
-{% endif %}
+  {% else %} 
+  <div class="card text-white mb-3">
+    <div class="card-header bg-danger">Rejected Invitation</div>
+    <div class="card-body bg-light">
+      <h5 class="card-title" style="color: black;">{{ notification.receiver.name }} rejected the invitation to join your team {{ notification.team.name }}</h5>
+    </div>
+  </div>
+  {% endif %}
+  {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if game_notifications %}
+  <h3>Your game requests:</h3>
+  <div class="d-flex flex-wrap" style="display: flex;">
+  {% for notification in game_notifications %} 
+  {% if notification.status == 'accepted' %} 
+  <div class="card text-white mb-3">
+    <div class="card-header bg-success">Accepted game request</div>
+    <div class="card-body bg-light">
+      <h5 class="card-title" style="color: black;">{{ notification.receiver_team.leader.name }} accepted your game request to play against his team {{ notification.receiver_team.name }} on {{ notification.game_date }}</h5>
+    </div>
+  </div>
+  {% else %} 
+  <div class="card text-white mb-3">
+    <div class="card-header bg-danger">Rejected game request</div>
+    <div class="card-body bg-light">
+      <h5 class="card-title" style="color: black;">{{ notification.receiver_team.leader.name }} rejected your game request to play against his team {{ notification.receiver_team.name }} on {{ notification.game_date }}</h5>
+    </div>
+  </div>
+  {% endif %}
+  {% endfor %}
+  </div>
+  {% endif %}
+  {% endif %}
+</div>
+
+<div class="team-invites" style="margin: 10px 10px 40px 10px;">
+  <h2>Team invitations</h2>
+  {% if team_invitations %}
+  {% for invitation in team_invitations %}
+    <div class="card my-3 invitation-{{ invitation.id }}" style="background-color: #f2f2f2;">
+      <div class="card-body" style="font-family: 'Helvetica Neue', sans-serif;">
+        <div class="d-flex align-items-center justify-content-start mb-3">
+          <i class="bi bi-envelope-fill fs-4 me-2"></i>
+          <h4 class="card-title mb-0">Team Invitation</h4>
+        </div>
+        <p class="card-text mb-4">{{ invitation.sender.name }} invited you to join his team {{ invitation.team.name }}.</p>
+        <h6>Team sport:</h6>
+        <p>{{ invitation.team.sport.name }}</p>
+        <h6>Message:</h6>
+        <p>{{ invitation.message }}</p>
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-success me-3 px-4 accept-btn" type="button" data-invitation-id="{{ invitation.id }}" data-invitation-type="team">Accept</button>
+          <button class="btn btn-danger px-4 decline-btn" type="button" data-invitation-id="{{ invitation.id }}" data-invitation-type="team">Decline</button>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  {% else %}
+  <div class="alert alert-info" role="alert">
+    You have no team invitations for the moment.
+  </div>
+  {% endif %}
+</div>
+
+<div class="game-invites" style="margin: 10px;">
+  <h2>Game invitations</h2>
+  {% if game_invitations %}
+  {% for invitation in game_invitations %}
+    <div class="card my-3 invitation-{{ invitation.id }}" style="background-color: #f2f2f2;">
+      <div class="card-body" style="font-family: 'Helvetica Neue', sans-serif;">
+        <div class="d-flex align-items-center justify-content-start mb-3">
+          <i class="bi bi-envelope-fill fs-4 me-2"></i>
+          <h4 class="card-title mb-0">Game Invitation</h4>
+        </div>
+        <p class="card-text mb-4">Leader {{ invitation.sender_team.leader.name }} of team {{ invitation.sender_team.name }} invited you to Play a game with your team {{ invitation.receiver_team.name }}.</p>
+        <h6>Team sport:</h6>
+        <p>{{ invitation.sender_team.sport.name }}</p>
+        <h6>Message:</h6>
+        <p>{{ invitation.message }}</p>
+        <h6>Date:</h6>
+        <p>{{ invitation.game_date }}</p>
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-success me-3 px-4 accept-btn" type="button" data-invitation-id="{{ invitation.id }}" data-invitation-type="game">Accept</button>
+          <button class="btn btn-danger px-4 decline-btn" type="button" data-invitation-id="{{ invitation.id }}" data-invitation-type="game">Decline</button>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  {% else %}
+  <div class="alert alert-info" role="alert">
+    You have no game invitations for the moment.
+  </div>
+  {% endif %}
+</div>
+
 {% endblock main %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='scripts/dashboard.js')}}">
+</script>
+{% endblock script %}

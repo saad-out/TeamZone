@@ -57,7 +57,7 @@ class BaseModel:
 
     def __str__(self):
         """String representation"""
-        obj_dict = self.__dict__
+        obj_dict = self.__dict__.copy()
         for key in ["_sa_instance_state", "cities", "teams", "players",
                     "notifications", "team_one", "team_two"]:
             if key in obj_dict:
