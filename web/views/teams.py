@@ -45,10 +45,27 @@ def edit_team(id):
     """
     team = storage.get(Team, id)
     if request.method == 'POST':
+        country_name = request.form.get('country')
+        country = storage.query(Country, "name", country_name)
+        if country:
+            country_id = country.id
+        else:
+            new_country = Country(name=country_name)
+            new_country.save()
+            country_id = new_country.id
+        
+        city_name = request.form.get('city')
+        city = storage.query(City, "name", city_name)
+        if city:
+            city_id = city.id
+        else:
+            new_city = City(name=city_name, country_id=country_id)
+            new_city.save()
+            city_id = new_city.id
+
         team.name = request.form.get('teamname')
         team.bio = request.form.get('teambio')
-        #country_id = request.form.get('countryid')
-        team.city_id = request.form.get('cityid')
+        team.city_id = city_id
         team.sport_id = request.form.get('sportid')
         reset = 'reset-picture' in request.form
         if not reset:
@@ -63,12 +80,10 @@ def edit_team(id):
     if (not team) or (team not in current_user.teams):
         flash("Team not found")
         return redirect(url_for('myteams'))
-    cities = storage.all(City).values()
-    countries = storage.all(Country).values()
     sports = storage.all(Sport).values()
 
     edit = current_user.id == team.leader_id
-    return render_template('team.html', team=team, cities=cities, countries=countries, sports=sports, edit=edit, connect=False)
+    return render_template('team.html', team=team, sports=sports, edit=edit, connect=False)
 
 @app.route('/myteams/create', methods=['GET', 'POST'])
 @login_required

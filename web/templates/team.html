@@ -10,94 +10,46 @@
 <div class="row mb-2">
   <div class="col-xl-12">
     <div class="float-end">
-      <button
-        data-bs-toggle="modal"
-        data-bs-target="#add-member"
-        type="button"
-        class="btn btn-primary"
-      >
+      <button data-bs-toggle="modal" data-bs-target="#add-member" type="button" class="btn btn-primary">
         <i class="bi bi-person-plus me-1"></i> Add Member
       </button>
-      <button
-        data-bs-toggle="modal"
-        data-bs-target="#edit-team"
-        type="button"
-        class="btn btn-primary"
-      >
+      <button data-bs-toggle="modal" data-bs-target="#edit-team" type="button" class="btn btn-primary">
         <i class="bi bi-pencil-square me-1"></i> Edit Team
       </button>
     </div>
   </div>
 </div>
 
-<div
-  class="modal fade"
-  id="edit-team"
-  tabindex="-1"
-  style="display: none"
-  aria-hidden="true"
->
+<div class="modal fade" id="edit-team" tabindex="-1" style="display: none" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Edit your team</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <!-- Multi Columns Form -->
-        <form
-          class="row g-3"
-          action="{{ url_for('edit_team', id=team.id) }}"
-          method="post"
-          enctype="multipart/form-data"
-        >
+        <form class="row g-3" action="{{ url_for('edit_team', id=team.id) }}" method="post"
+          enctype="multipart/form-data">
           <div class="col-md-12">
             <label for="teamname" class="form-label">Team Name</label>
-            <input
-              name="teamname"
-              type="text"
-              class="form-control"
-              id="teamname"
-              value="{{ team.name }}"
-            />
+            <input name="teamname" type="text" class="form-control" id="teamname" value="{{ team.name }}" />
           </div>
           <div class="col-md-12">
             <label for="teambio" class="form-label">Team Bio</label>
-            <textarea
-              name="teambio"
-              id="teambio"
-              class="form-control"
-              style="height: 100px"
-            >
-{{ team.bio }}</textarea
-            >
+            <textarea name="teambio" id="teambio" class="form-control" style="height: 100px">
+{{ team.bio }}</textarea>
           </div>
           <div class="col-md-12">
-            <label for="team2name" class="form-label">Country</label>
-            <select id="team2name" class="form-select" name="countryid">
-              {% for country in countries %} {% if team.city.country_id ==
-              country.id %}
-              <option value="{{ country.id }}" selected>
-                {{ country.name }}
-              </option>
-              {% else %}
-              <option value="{{ country.id }}">{{ country.name }}</option>
-              {% endif %} {% endfor %}
+            <label for="teamcountry" class="form-label">Country</label>
+            <select id="teamcountry" class="form-select" name="country">
+              <option selected value="">Choose...</option>
             </select>
           </div>
           <div class="col-md-12">
             <label for="teamcity" class="form-label">City</label>
-            <select id="teamcity" class="form-select" name="cityid">
-              {% for city in cities %} {% if team.city_id == city.id %}
-              <option value="{{ city.id }}" selected>{{ city.name }}</option>
-              {% else %}
-              <option value="{{ city.id }}">{{ city.name }}</option>
-              {% endif %} {% endfor %}
+            <select id="teamcity" class="form-select" name="city">
+              <option selected value="">Choose...</option>
             </select>
           </div>
           <div class="col-md-12">
@@ -111,29 +63,14 @@
             </select>
           </div>
           <div class="col-md-12">
-            <label for="image" class="col-sm-4 col-form-label"
-              >Upload Logo</label
-            >
+            <label for="image" class="col-sm-4 col-form-label">Upload Logo</label>
             <div class="col-sm-10">
-              <input
-                class="form-control"
-                type="file"
-                id="image"
-                name="image"
-                accept="image/jpeg, image/png"
-              />
+              <input class="form-control" type="file" id="image" name="image" accept="image/jpeg, image/png" />
             </div>
           </div>
           <div class="col-md-12">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              id="reset-picture"
-              name="reset-picture"
-            />
-            <label for="reset-picture" class="col-md-4 col-form-label"
-              >Use default image</label
-            >
+            <input class="form-check-input" type="checkbox" id="reset-picture" name="reset-picture" />
+            <label for="reset-picture" class="col-md-4 col-form-label">Use default image</label>
           </div>
           <div class="text-center">
             <button type="submit" class="btn btn-primary">Update Team</button>
@@ -148,52 +85,24 @@
     </div>
   </div>
 </div>
-<div
-  class="modal fade"
-  id="add-member"
-  tabindex="-1"
-  style="display: none"
-  aria-hidden="true"
->
+<div class="modal fade" id="add-member" tabindex="-1" style="display: none" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Add a member</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <!-- Multi Columns Form -->
-        <form
-          class="row g-3"
-          action="{{ url_for('invite_user', team_id=team.id) }}"
-          method="post"
-        >
+        <form class="row g-3" action="{{ url_for('invite_user', team_id=team.id) }}" method="post">
           <div class="col-md-12">
             <label for="username" class="form-label">Username</label>
-            <input
-              name="username"
-              type="text"
-              class="form-control"
-              id="username"
-              value=""
-              placeholder="Enter the username"
-            />
+            <input name="username" type="text" class="form-control" id="username" value=""
+              placeholder="Enter the username" />
           </div>
           <div class="col-md-12">
-            <label for="request-message" class="form-label"
-              >Request message</label
-            >
-            <textarea
-              name="request-message"
-              id="request-message"
-              class="form-control"
-              style="height: 100px"
-            ></textarea>
+            <label for="request-message" class="form-label">Request message</label>
+            <textarea name="request-message" id="request-message" class="form-control" style="height: 100px"></textarea>
           </div>
           <div class="text-center">
             <button type="submit" class="btn btn-primary">Invite User</button>
@@ -214,12 +123,8 @@
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <img
-            src="{{ url_for('static', filename='images/teams/{}'.format(team.image)) }}"
-            alt="Team Logo"
-            class="img-fluid rounded-circle w-50 h-50 mx-auto d-block"
-            style="max-width: 100%; height: auto"
-          />
+          <img src="{{ url_for('static', filename='images/teams/{}'.format(team.image)) }}" alt="Team Logo"
+            class="img-fluid rounded-circle w-50 h-50 mx-auto d-block" style="max-width: 100%; height: auto" />
           <h5 class="card-title">Team Details</h5>
           <div class="row">
             <div class="col-lg-3 col-md-4 label">Name</div>
@@ -240,12 +145,7 @@
 
       {% if (not edit) and (connect) %}
       <!-- Vertically centered Modal -->
-      <button
-        type="button"
-        class="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#team-connection"
-      >
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#team-connection">
         <i class="bi bi-pencil-square me-1"></i> Create Team Connection
       </button>
       <div class="modal fade" id="team-connection" tabindex="-1">
@@ -253,74 +153,40 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Create A Team Connection</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <p>Ready to connect with {{ team.name }}?</p>
+            <p style="text-align: center;">Ready to connect with {{ team.name }}?</p>
             <div class="modal-body">
               {% if current_user.is_authenticated %}
-              <form
-                id="team-request"
-                class="row g-3"
-                action="{{ url_for('game_invite') }}"
-                method="post"
-                enctype="multipart/form-data"
-              >
+              <form id="team-request" class="row g-3" action="{{ url_for('game_invite') }}" method="post"
+                enctype="multipart/form-data">
                 <div class="col-md-12">
-                  <input
-                    name="receiver-team-id"
-                    type="text"
-                    class="form-control"
-                    id="teamid"
-                    value="{{ team.id }}"
-                    hidden
-                  />
+                  <input name="receiver-team-id" type="text" class="form-control" id="teamid" value="{{ team.id }}"
+                    hidden />
                 </div>
                 <div class="col-md-12">
                   <label for="team2name" class="form-label">Your team</label>
                   <select id="team2" class="form-select" name="sender-team-id">
                     <option value="" selected>Choose one of your teams</option>
                     {% for team in current_user.teams %}
+                    {% if current_user.id == team.leader.id %}
                     <option value="{{ team.id }}">{{ team.name }}</option>
+                    {% endif %}
                     {% endfor %}
                   </select>
                 </div>
                 <div class="col-md-6">
-                  <label for="schedule-date" class="form-label"
-                    >Schedule Date</label
-                  >
-                  <input
-                    name="schedule-date"
-                    type="date"
-                    class="form-control"
-                    id="schedule-date"
-                  />
+                  <label for="schedule-date" class="form-label">Schedule Date</label>
+                  <input name="schedule-date" type="date" class="form-control" id="schedule-date" />
                 </div>
                 <div class="col-md-6">
-                  <label for="schedule-time" class="form-label"
-                    >Schedule time</label
-                  >
-                  <input
-                    name="schedule-time"
-                    type="time"
-                    class="form-control"
-                    id="schedule-time"
-                  />
+                  <label for="schedule-time" class="form-label">Schedule time</label>
+                  <input name="schedule-time" type="time" class="form-control" id="schedule-time" />
                 </div>
                 <div class="col-md-12">
-                  <label for="request-message" class="form-label"
-                    >Request message</label
-                  >
-                  <textarea
-                    name="request-message"
-                    id="request-message"
-                    class="form-control"
-                    style="height: 100px"
-                  ></textarea>
+                  <label for="request-message" class="form-label">Request message</label>
+                  <textarea name="request-message" id="request-message" class="form-control"
+                    style="height: 100px"></textarea>
                 </div>
 
                 <div class="text-center">
@@ -331,17 +197,11 @@
               </form>
               {% else %}
               <p>Looks like you are not logged in</p>
-              <a href="{{ url_for('login') }}" class="btn btn-primary"
-                >Login now</a
-              >
+              <a href="{{ url_for('login') }}" class="btn btn-primary">Login now</a>
               {% endif %}
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                 Close
               </button>
             </div>
@@ -370,4 +230,5 @@
 
 {% endblock main %} {% block script %}
 <script src="{{ url_for('static', filename='scripts/team.js')}}"></script>
+<script src="{{ url_for('static', filename='scripts/create.js')}}"></script>
 {% endblock script %}
