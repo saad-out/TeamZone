@@ -15,7 +15,7 @@
 body {
   font-family: "Open Sans", sans-serif;
   background: #f6f9ff;
-  color: #444444;
+  color: black;
 }
 
 a {
@@ -43,8 +43,9 @@ h6 {
 #main {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   min-height: 100vh;
-  background: url('../images/grey_area.png') no-repeat;
+  background: url("../images/grey_area.png") no-repeat;
   background-size: 100% 100%;
   margin-top: 60px;
   /* transition: all 0.3s; */
@@ -66,7 +67,6 @@ h6 {
   border: solid 1px black;
   padding: 10px;
   margin: 23px;
-
 }
 
 .main p {
@@ -126,7 +126,7 @@ h6 {
   text-align: center;
 }
 
-.info h3{
+.info h3 {
   /* color:#0A49F6; */
   text-align: center;
   font-weight: 700;
@@ -170,7 +170,8 @@ h6 {
   margin: 0 0 35px;
 }
 
-a:hover, a:active {
+a:hover,
+a:active {
   color: #ffb901;
   text-decoration: none;
   outline: 0;
@@ -220,7 +221,6 @@ a:hover, a:active {
   margin: 0 0 5px;
 }
 
-
 .feature .feature-box .feature-content {
   float: left;
   padding-left: 28px;
@@ -239,9 +239,9 @@ a:hover, a:active {
   line-height: 22px;
 }
 .icon {
-  color : #f4b841;
-  padding:0px;
-  font-size:40px;
+  color: #f4b841;
+  padding: 0px;
+  font-size: 40px;
   border: 1px solid #fdb801;
   border-radius: 100px;
   color: #fdb801;
