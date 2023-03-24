@@ -1,8 +1,8 @@
 from web.app import app
 
 from flask import render_template, redirect, flash, url_for, request
-from flask_login import login_required, current_user
-from models import storage, City, Country, Sport, Team, TeamInvite, GameInvite, User
+from flask_login import current_user
+from models import storage, User
 from .utils import send_reset_email, verify_reset_token
 from werkzeug.security import generate_password_hash
 
@@ -35,7 +35,7 @@ def reset_token(token):
         renewpassword = request.form.get('renewpassword')
 
         if newpassword != renewpassword:
-            flash("password doesn't match")
+            flash("passwords doesn't match")
             return redirect(url_for('reset_token', token=token))
         hashed_password = generate_password_hash(newpassword)
         user.password = hashed_password
