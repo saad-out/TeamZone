@@ -15,6 +15,7 @@ from web.app import app
 from flask import render_template, redirect, flash, url_for, g
 from flask_login import login_required, current_user
 from models import storage, City, Country, Sport, Team, TeamInvite, GameInvite
+from .utils import format_datetime
 
 
 @app.route('/')
@@ -64,7 +65,8 @@ def dashboard():
                            game_invitations=pending_game_invitations,
                            team_invitations=pending_team_invitations,
                            game_notifications=answered_game_invitations,
-                           team_notifications=answered_team_invitations)
+                           team_notifications=answered_team_invitations,
+                           format_datetime=format_datetime)
 
 
 @app.route('/search')

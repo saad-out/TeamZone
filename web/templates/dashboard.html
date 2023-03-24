@@ -37,15 +37,16 @@
   {% endif %} {% if game_notifications %}
   <h3>Your game requests:</h3>
   <div class="d-flex flex-wrap" style="display: flex">
-    {% for notification in game_notifications %} {% if notification.status ==
+    {% for notification in game_notifications %} {% set date, time =
+    format_datetime(notification.game_date) %} {% if notification.status ==
     'accepted' %}
     <div class="card text-white mb-3">
       <div class="card-header bg-success">Accepted game request</div>
       <div class="card-body bg-light">
         <h5 class="card-title" style="color: black">
           {{ notification.receiver_team.leader.name }} accepted your game
-          request to play against his team {{ notification.receiver_team.name }}
-          on {{ notification.game_date }}
+          request to play against his team {{ notification.receiver_team.name
+          }}. Game time: {{ date }} at {{ time }}.
         </h5>
       </div>
     </div>
@@ -55,8 +56,8 @@
       <div class="card-body bg-light">
         <h5 class="card-title" style="color: black">
           {{ notification.receiver_team.leader.name }} rejected your game
-          request to play against his team {{ notification.receiver_team.name }}
-          on {{ notification.game_date }}
+          request to play against his team {{ notification.receiver_team.name
+          }}. Game time: {{ date }} at {{ time }}.
         </h5>
       </div>
     </div>
@@ -133,8 +134,11 @@
       <p>{{ invitation.sender_team.sport.name }}</p>
       <h6>Message:</h6>
       <p>{{ invitation.message }}</p>
+      {% set date, time = format_datetime(invitation.game_date) %}
       <h6>Date:</h6>
-      <p>{{ invitation.game_date }}</p>
+      <p>{{ date }}</p>
+      <h6>Time:</h6>
+      <p>{{ time }}</p>
       <div class="d-flex justify-content-end">
         <button
           class="btn btn-success me-3 px-4 accept-btn"
