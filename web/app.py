@@ -32,7 +32,7 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'mysecretkey'
+app.config['SECRET_KEY'] = os.environ['APP_KEY']
 login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
