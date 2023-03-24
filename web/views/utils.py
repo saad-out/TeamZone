@@ -6,9 +6,12 @@ Functions:
     - update_invitations_status(response): Updates the status of invitations in the database after a request has been made.
 """
 from PIL import Image
-from web.app import app
+from web.app import app, mail
+
+from flask_mail import Message
+from itsdangerous import URLSafeTimedSerializer
 import os
-from flask import redirect, url_for, flash, g
+from flask import redirect, url_for, flash, g, render_template
 
 def save_image(image, directory, id):
     """
@@ -84,3 +87,22 @@ def update_invitions_status(response):
                 invite.status = 'seen'
                 invite.save()
     return response
+
+def verify_reset_token(token):
+    s = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+    try:
+        user_id = s.loads(token, max_age=600)['user_id']
+    except:
+        return None
+    return user_id
+
+
+def get_reset_token(user):
+    s = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+    return s.dumps({'user_id': user.id})
+
+def send_reset_email(user):
+    token = get_reset_token(user)
+    msg = Message('Password Reset Request', sender='noreply@teamzone.com', recipients=[user.email])
+    msg.html = render_template('email.html', url=url_for('reset_token', token=token, _external=True), name=user.name)
+    mail.send(msg)

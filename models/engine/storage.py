@@ -53,6 +53,7 @@ class Storage:
                                              TZ_MYSQL_PWD,
                                              TZ_MYSQL_HOST,
                                              TZ_MYSQL_DB))
+        self.__engine = create_engine('sqlite:///tzt.db')
         # Drop all tables in the database if in test environment
         if TZ_ENV == "test":
             Base.metadata.drop_all(self.__engine)

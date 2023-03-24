@@ -15,3 +15,4 @@ from web.views.site import *
 from web.views.teams import *
 from web.views.profile import *
 from web.views.invites import *
+from web.views.reset import *
