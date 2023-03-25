@@ -5,7 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
     {% block title %}
-    <title>Home</title>
+    <title>Dashboard</title>
     {% endblock title %}
     <meta content="" name="description" />
     <meta content="" name="keywords" />
@@ -51,7 +51,6 @@
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
       <div class="d-flex align-items-center justify-content-between">
-        
         {% if current_user.is_authenticated %}
         <i class="bi bi-list toggle-sidebar-btn"></i>
         <a
@@ -111,8 +110,7 @@
     </style>
 
     {% block main %}
-    <main id="main" class="main">  
-      
+    <main id="main" class="main">      
       <section class="description">
         <h3>
           Build Your Team And<br />
@@ -127,7 +125,7 @@
             with your local athletes.</b
           >
         </p>
-      </section>  
+      </section>
     </main>
     {% endblock main %}
     
