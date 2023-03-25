@@ -40,6 +40,6 @@ def reset_token(token):
         hashed_password = generate_password_hash(newpassword)
         user.password = hashed_password
         user.save()
-        flash('Your password has been updated! Log in')
+        flash('Your password has been updated!', 'info')
         return redirect(url_for('login'))
     return render_template('reset_token.html')
