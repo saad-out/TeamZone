@@ -219,7 +219,10 @@
           <h5 class="card-title">Team Players</h5>
           <!-- List group Numbered -->
           <ol class="list-group list-group-numbered">
-            <li class="list-group-item">{{ team.leader.name }} <i class="bi bi-award" style="margin-left: 50%;">Team Leader</i></li>
+            <li class="list-group-item" style="display: flex; align-items: center; justify-content: space-between;">
+              {{ team.leader.name }}
+              <i class="bi bi-award" style="margin-left: auto;">Team Leader</i>
+            </li>            
             {% for player in team.players %}
             {% if player != team.leader %}
             <li class="list-group-item">{{ player.name }}</li>
