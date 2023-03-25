@@ -43,23 +43,25 @@
           <div class="col-md-12">
             <label for="teamcountry" class="form-label">Country</label>
             <select id="teamcountry" class="form-select" name="country">
-              <option selected value="">Choose...</option>
+              <option selected value="{{ team.city.country.name }}">{{ team.city.country.name }}</option>
             </select>
           </div>
           <div class="col-md-12">
             <label for="teamcity" class="form-label">City</label>
             <select id="teamcity" class="form-select" name="city">
-              <option selected value="">Choose...</option>
+              <option selected value="{{ team.city.name }}">{{ team.city.name }}</option>
             </select>
           </div>
           <div class="col-md-12">
             <label for="teamsport" class="form-label">Sport</label>
             <select id="teamsport" class="form-select" name="sportid">
-              {% for sport in sports %} {% if team.sport_id == sport.id %}
+              {% for sport in sports %}
+              {% if team.sport_id == sport.id %}
               <option value="{{ sport.id }}" selected>{{ sport.name }}</option>
               {% else %}
               <option value="{{ sport.id }}">{{ sport.name }}</option>
-              {% endif %} {% endfor %}
+              {% endif %} 
+              {% endfor %}
             </select>
           </div>
           <div class="col-md-12">
@@ -168,9 +170,9 @@
                   <label for="team2name" class="form-label">Your team</label>
                   <select id="team2" class="form-select" name="sender-team-id">
                     <option value="" selected>Choose one of your teams</option>
-                    {% for team in current_user.teams %}
-                    {% if current_user.id == team.leader.id %}
-                    <option value="{{ team.id }}">{{ team.name }}</option>
+                    {% for my_team in current_user.teams %}
+                    {% if (current_user.id == my_team.leader.id) and (my_team.sport == team.sport) %}
+                    <option value="{{ team.id }}">{{ my_team.name }}</option>
                     {% endif %}
                     {% endfor %}
                   </select>
