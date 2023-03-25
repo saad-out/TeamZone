@@ -43,12 +43,10 @@ h6 {
 #main {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
   min-height: 100vh;
   background: url("../images/grey_area.png") no-repeat;
   background-size: 100% 100%;
   margin-top: 60px;
-  /* transition: all 0.3s; */
 }
 
 @media (max-width: 1199px) {
@@ -58,7 +56,6 @@ h6 {
 }
 
 .main .description {
-  /* border: solid 1px red; */
   max-width: 27%;
   border-radius: 10px;
 }
