@@ -14,7 +14,7 @@ from web.app import app
 from flask import render_template, request, url_for, redirect, flash, jsonify
 from flask_login import login_required, current_user
 from models import storage, City, Country, Sport, Team, User, GameInvite, TeamInvite
-from .utils import save_image
+from .utils import save_image, format_datetime
 from datetime import datetime
 
 
@@ -60,8 +60,20 @@ def game_invite():
     new_game_invite.save()
     
     flash('Sent successfully.', 'info')
-    return redirect('dashboard')
+    return redirect(url_for('game', id=new_game_invite.id))
 
+
+@app.route('/games/<id>')
+@login_required
+def game(id):
+    gi = storage.get(GameInvite, id)
+    if gi is None:
+        flash('This game invite does not exist')
+        return redirect(url_for('dashboard'))
+    sender_team = gi.sender_team
+    receiver_team = gi.receiver_team
+    
+    return render_template('game.html', gi=gi, sender_team=sender_team, receiver_team=receiver_team, format_datetime=format_datetime)
 
 @app.route('/update_game_invite', methods=['POST'])
 @login_required

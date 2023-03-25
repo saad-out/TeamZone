@@ -13,6 +13,8 @@ from itsdangerous import URLSafeTimedSerializer
 import os
 from flask import redirect, url_for, flash, g, render_template
 
+import calendar
+
 def save_image(image, directory, id):
     """
     Saves an uploaded image to the static folder and returns the filename.
@@ -106,3 +108,20 @@ def send_reset_email(user):
     msg = Message('Password Reset Request', sender='noreply@teamzone.com', recipients=[user.email])
     msg.html = render_template('email.html', url=url_for('reset_token', token=token, _external=True), name=user.name)
     mail.send(msg)
+
+def format_datetime(dt):
+    # Get the day name, month, day, and year from the datetime object
+    day_name = calendar.day_name[dt.weekday()]
+    month = calendar.month_name[dt.month]
+    day = dt.day
+    year = dt.year
+
+    # Get the hour, minute, and AM/PM suffix from the datetime object
+    hour = dt.hour % 12
+    minute = dt.minute
+    am_pm = 'AM' if dt.hour < 12 else 'PM'
+
+    # Return a tuple of the formatted date and time components
+    date_str = f"{day_name}, {month} {day}, {year}"
+    time_str = f"{hour}:{minute:02d} {am_pm}"
+    return date_str, time_str

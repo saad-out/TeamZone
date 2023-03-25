@@ -4,9 +4,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    {% block title %}
-    <title>Dashboard</title>
-    {% endblock title %}
+    {% block title %} {% endblock title %}
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
@@ -53,30 +51,33 @@
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
       <div class="d-flex align-items-center justify-content-between">
-        <i class="bi bi-list toggle-sidebar-btn"></i>
         {% if current_user.is_authenticated %}
+        <i class="bi bi-list toggle-sidebar-btn"></i>
         <a
           href="{{ url_for('signout', next=url_for('landing_page')) }}"
           class="logo d-flex align-items-center"
-        >
-        {% else %} 
-        <a
-          href="{{ url_for('landing_page') }}"
-          class="logo d-flex align-items-center"
-        >
-        {% endif %}
-          <img
+          ><img
             src="{{ url_for('static', filename='images/app_logo.png') }}"
             alt=""
           />
           <span class="d-none d-lg-block">TeamZone</span>
         </a>
+        {% else %}
+        <a
+          href="{{ url_for('landing_page') }}"
+          class="logo d-flex align-items-center"
+          ><img
+            src="{{ url_for('static', filename='images/app_logo.png') }}"
+            alt=""
+          />
+          <span class="d-none d-lg-block">TeamZone</span>
+        </a>
+        {% endif %}
       </div>
       <!-- End Logo -->
 
       <nav class="header-nav ms-auto">
-        {% block navbar %}
-        {% if current_user.is_authenticated %}
+        {% block navbar %} {% if current_user.is_authenticated %}
         <ul class="d-flex align-items-center">
           <!-- End Notification Nav -->
 
@@ -145,8 +146,7 @@
             </button>
           </form>
         </nav>
-        {% endif %}
-        {% endblock navbar %}
+        {% endif %} {% endblock navbar %}
       </nav>
       <!-- End Icons Navigation -->
     </header>
@@ -220,10 +220,8 @@
     {% endif %}
 
     <main id="main" class="main">
-      {% block notifications %}
-      {% with messages = get_flashed_messages() %} 
-      {% if messages %} 
-      {% for message in messages %}
+      {% block notifications %} {% with messages = get_flashed_messages() %} {%
+      if messages %} {% for message in messages %}
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <i class="bi bi-exclamation-triangle me-1"></i>
         {{ message }}
@@ -233,17 +231,10 @@
           data-bs-dismiss="alert"
           aria-label="Close"
         ></button>
-      {% endfor %}
+        {% endfor %}
       </div>
-      {% endif %}
-      {% endwith %}
-      {% endblock notifications %}
-
-      {% block main %}
-      {% endblock main %}
-
-      {% block sections %} 
-      {% endblock sections %}
+      {% endif %} {% endwith %} {% endblock notifications %} {% block main %} {%
+      endblock main %} {% block sections %} {% endblock sections %}
     </main>
     <!-- End #main -->
 

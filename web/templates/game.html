@@ -1,0 +1,86 @@
+{% extends "base.html" %} {% block title %}
+<title>Game Invite</title>
+{% endblock title %} {% block style %} {% endblock style %} {% block main %} {%
+if current_user.id == sender_team.leader_id %}
+<span>Status: </span>
+<span>{{ gi.status }} </span>
+
+{% endif %}
+<div class="row">
+  <div class="col-xl-5">
+    <div class="card">
+      <div class="card-body">
+        <img
+          src="{{ url_for('static', filename='images/teams/{}'.format(sender_team.image)) }}"
+          alt="Team Logo"
+          class="img-fluid rounded-circle w-50 h-50 mx-auto d-block"
+          style="max-width: 100%; height: auto"
+        />
+        <h5 class="card-title">Team Details</h5>
+        <div class="row">
+          <div class="col-lg-3 col-md-4 label">Name</div>
+          <div class="col-lg-9 col-md-8">{{ sender_team.name}}</div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-4 label">Sport</div>
+          <div class="col-lg-9 col-md-8">{{ sender_team.sport.name}}</div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-4 label">Location</div>
+          <div class="col-lg-9 col-md-8">
+            {{ sender_team.city.name }}, {{ sender_team.city.country.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-2 d-flex justify-content-center align-items-center">
+    <h1>VS</h1>
+  </div>
+  <div class="col-xl-5">
+    <div class="card">
+      <div class="card-body">
+        <img
+          src="{{ url_for('static', filename='images/teams/{}'.format(receiver_team.image)) }}"
+          alt="Team Logo"
+          class="img-fluid rounded-circle w-50 h-50 mx-auto d-block"
+          style="max-width: 100%; height: auto"
+        />
+        <h5 class="card-title">Team Details</h5>
+        <div class="row">
+          <div class="col-lg-3 col-md-4 label">Name</div>
+          <div class="col-lg-9 col-md-8">{{ receiver_team.name}}</div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-4 label">Sport</div>
+          <div class="col-lg-9 col-md-8">{{ receiver_team.sport.name}}</div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-4 label">Location</div>
+          <div class="col-lg-9 col-md-8">
+            {{ receiver_team.city.name }}, {{ receiver_team.city.country.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xl-5 mx-auto">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Game Details</h5>
+        <div class="row">
+          {% set date, time = format_datetime(gi.game_date) %}
+          <div class="col-lg-3 col-md-4 label">Date</div>
+          <div class="col-lg-9 col-md-8">{{ date }}</div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-4 label">Time</div>
+          <div class="col-lg-9 col-md-8">{{ time }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock main %} {% block script %} {% endblock script %}
