@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 """Module containing Sport class for representing a sport"""
 
 from models.base_model import BaseModel, Base

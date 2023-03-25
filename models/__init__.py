@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 """Init module"""
 
 from models.engine.storage import Storage

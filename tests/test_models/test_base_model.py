@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 """Test Basemodel"""
 from datetime import datetime
 import models

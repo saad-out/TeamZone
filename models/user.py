@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 """Module defining the User class"""
 from flask_login import UserMixin
 from models.base_model import BaseModel, Base

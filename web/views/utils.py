@@ -91,6 +91,16 @@ def update_invitions_status(response):
     return response
 
 def verify_reset_token(token):
+    """
+    Verify that the given token is valid and return the user ID associated with it.
+
+    Args:
+        token (str): A string containing the reset token to verify.
+
+    Returns:
+        str or None: If the token is valid, returns the user ID associated with it. If the token is invalid or expired,
+        returns None.
+    """
     s = URLSafeTimedSerializer(app.config['SECRET_KEY'])
     try:
         user_id = s.loads(token, max_age=600)['user_id']
@@ -100,28 +110,54 @@ def verify_reset_token(token):
 
 
 def get_reset_token(user):
+    """
+    Generate a reset token for the given user.
+
+    Args:
+        user (User): An instance of the User class representing the user.
+
+    Returns:
+        str: A string containing the reset token for the user.
+    """
     s = URLSafeTimedSerializer(app.config['SECRET_KEY'])
     return s.dumps({'user_id': user.id})
 
 def send_reset_email(user):
+    """
+    Send a password reset email to the given user containing a reset link.
+
+    Args:
+        user (User): An instance of the User class representing the user.
+
+    Returns:
+        None.
+    """
     token = get_reset_token(user)
     msg = Message('Password Reset Request', sender='noreply@teamzone.com', recipients=[user.email])
     msg.html = render_template('email.html', url=url_for('reset_token', token=token, _external=True), name=user.name)
     mail.send(msg)
 
 def format_datetime(dt):
-    # Get the day name, month, day, and year from the datetime object
+    """
+    Format the given datetime object into a human-readable date and time string.
+
+    Args:
+        dt (datetime.datetime): A datetime object representing the date and time to format.
+
+    Returns:
+        tuple: A tuple containing two strings: a date string and a time string formatted as follows:
+            - Date string: "{weekday name}, {month name} {day}, {year}"
+            - Time string: "{hour}:{minute with leading zeros} {AM/PM}"
+    """
     day_name = calendar.day_name[dt.weekday()]
     month = calendar.month_name[dt.month]
     day = dt.day
     year = dt.year
 
-    # Get the hour, minute, and AM/PM suffix from the datetime object
     hour = dt.hour % 12
     minute = dt.minute
     am_pm = 'AM' if dt.hour < 12 else 'PM'
 
-    # Return a tuple of the formatted date and time components
     date_str = f"{day_name}, {month} {day}, {year}"
     time_str = f"{hour}:{minute:02d} {am_pm}"
     return date_str, time_str

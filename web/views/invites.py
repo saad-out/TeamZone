@@ -66,6 +66,15 @@ def game_invite():
 @app.route('/games/<id>')
 @login_required
 def game(id):
+    """
+    Display the game page for the game invite with the given ID.
+
+    Args:
+        id (int): The ID of the game invite to display.
+
+    Returns:
+        str: A rendered HTML template displaying the game page for the game invite.
+    """
     gi = storage.get(GameInvite, id)
     if gi is None:
         flash('This game invite does not exist')

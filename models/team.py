@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 """Module containing Team class for representing a team"""
 
 from models.base_model import BaseModel, Base

@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 """Module containing Notification class for representing a team invite"""
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, Boolean, Text, Enum

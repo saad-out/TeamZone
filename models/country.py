@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 """Module containing Country class for representing a country"""
 
 from models.base_model import BaseModel, Base

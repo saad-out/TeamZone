@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 """
 Class representing an invite connection between two teams.
 """

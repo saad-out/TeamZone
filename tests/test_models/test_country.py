@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 """
 Test the country class
 """

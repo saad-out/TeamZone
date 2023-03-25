@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 """Module containing City class for representing a city"""
 
 from models.base_model import BaseModel, Base
