@@ -78,8 +78,7 @@
         <h4 class="card-title mb-0">Team Invitation</h4>
       </div>
       <p class="card-text mb-4">
-        {{ invitation.sender.name }} invited you to join his team {{
-        invitation.team.name }}.
+        {{ invitation.sender.name }} invited you to join his team <a href="search/{{ invitation.team.id }}" target="_blank">{{ invitation.team.name }}</a>.
       </p>
       <h6>Team sport:</h6>
       <p>{{ invitation.team.sport.name }}</p>
@@ -125,9 +124,8 @@
         <h4 class="card-title mb-0">Game Invitation</h4>
       </div>
       <p class="card-text mb-4">
-        Leader {{ invitation.sender_team.leader.name }} of team {{
-        invitation.sender_team.name }} invited you to Play a game with your team
-        {{ invitation.receiver_team.name }}.
+        Leader {{ invitation.sender_team.leader.name }} of team <a href="search/{{ invitation.sender_team.id }}" target="_blank">{{ invitation.sender_team.name }}</a> invited you to Play a game with your team
+        <a href="myteams/{{ invitation.receiver_team.id }}" target="_blank">{{ invitation.receiver_team.name }}</a>.
       </p>
       <h6>Team sport:</h6>
       <p>{{ invitation.sender_team.sport.name }}</p>
