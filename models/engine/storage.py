@@ -13,9 +13,14 @@ from models.team import Team
 from models.game_invite import GameInvite
 from models.user import User
 from models.team_invite import TeamInvite
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from os import getenv
+from dotenv.main import load_dotenv
+
+
+load_dotenv()
 
 classes = {
     "Country": Country,
