@@ -172,7 +172,7 @@
                     <option value="" selected>Choose one of your teams</option>
                     {% for my_team in current_user.teams %}
                     {% if (current_user.id == my_team.leader.id) and (my_team.sport == team.sport) %}
-                    <option value="{{ team.id }}">{{ my_team.name }}</option>
+                    <option value="{{ my_team.id }}">{{ my_team.name }}</option>
                     {% endif %}
                     {% endfor %}
                   </select>
