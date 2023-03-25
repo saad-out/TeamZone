@@ -1,7 +1,8 @@
 """
 The `web/app.py` module is the main entry point for the web Flask application. It creates the Flask 
 application, sets the configuration variables, and initializes the Flask-Login extension. It also
-defines the `load_user` and `unauthorized_callback` functions for the Flask-Login extension.
+defines the `load_user` and `unauthorized_callback` functions for the Flask-Login extension. Additioanlly,
+it defines the `page_not_found` and `close_session` functions for error handling and session management.
 
 The Flask application defines routes and views in the `web/views` package, which is imported at the 
 end of this module.
@@ -9,6 +10,7 @@ end of this module.
 Attributes:
     app (Flask): The Flask application object.
     login_manager (LoginManager): The Flask-Login extension object.
+    mail (Mail): The Flask-Mail extension object.
 
 Usage:
 To start the application, run the module from the main folder:
@@ -79,6 +81,20 @@ def page_not_found(e):
         A rendered 404 error page.
     """
     return render_template('404.html'), 404
+
+
+@app.teardown_appcontext
+def close_session(exception):
+    """
+    Close the current SQLAlchemy session after each request.
+
+    Args:
+        exception: An optional exception that was raised during the request, if applicable.
+
+    Returns:
+        None.
+    """
+    storage.close()
 
 
 from web.views import *
