@@ -135,14 +135,16 @@
         <div class="content">
           <div class="card-features">
             <div class="info">
+              <img src="{{ url_for('static', filename='images/search.png')}}" alt="" style="width: 100%; height: auto;">
               <h3>Find sports teams</h3>
               <p>
-                Search for teams based on sport, location, availability and more.
+                Search for teams based on sport, location, availability and more. Filter & find the perfect team for you.
               </p>
             </div>
           </div>
           <div class="card-features">
             <div class="info">
+              <img src="{{ url_for('static', filename='images/create.png')}}" alt="" style="width: 100%; height: auto;">
               <h3>Create your team</h3>
               <p>
                 Sign up and build your team from scratch, add your teammates and
@@ -152,6 +154,7 @@
           </div>
           <div class="card-features">
             <div class="info">
+              <img src="{{ url_for('static', filename='images/connection.png')}}" alt="" style="width: 100%; height: auto;">
               <h3>Compete with other teams</h3>
               <p>
                 Reach out to other teams from your local area , or get invitations
@@ -168,17 +171,19 @@
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="aboutus">
                 <h2 class="aboutus-title">About</h2>
-                <p class="aboutus-text">
+                <!-- <p class="aboutus-text">
                   This web application <b>`TeamZone`</b> is a portfolio project
                   for the foundations section of the ALX Software engineering
                   program.
-                </p>
+                </p> -->
                 <p class="aboutus-text">
-                  Starting from the ground up with no programming background
-                  required, this project is the result of 9 months of learning.
-                  Beginning with the very basics of programming, then advancing to
-                  cover every aspect of the web including the Front-End, Back-End
-                  and DevOps parts of an application.
+                  The idea for TeamZone was inspired by a passion for sports and a desire to make it easier 
+                  for local teams to connect and organize games. We recognized a need for a streamlined platform 
+                  that would allow teams to quickly and easily find and schedule games with other local teams. With this goal in mind, 
+                  we set out to develop an application that would simplify the process of organizing games and promote greater community 
+                  involvement in local sports.
+                  <br> <br>
+                 This came to life as a portfolio project for the foundations section of the ALX Software engineering program.
                 </p>
                 <a
                   class="aboutus-more"
@@ -226,12 +231,9 @@
                       <span class="glyphicon glyphicon-cog icon"></span>
                     </div>
                     <div class="feature-content">
-                      <h4>DevOps</h4>
+                      <h4>Architecture</h4>
                       <p>
-                        Our infrastructure consists of two Nginx web servers
-                        sitting behind an HAProxy load balancer. Forwarding
-                        requests to our JavaScirpt code which communicates with
-                        the Back-End using RESTful APIs.
+                        TeamZone's user interface is populated with data server-side using Jinja templates. The HTML pages are returned ready to be rendered on the client-side, with the exception of the search and filter page, which is populated using JavaScript that fetches data from the application's API. This approach provides a seamless and responsive user experience, with fast page load times and up-to-date information on all teams and games.
                       </p>
                     </div>
                   </div>
