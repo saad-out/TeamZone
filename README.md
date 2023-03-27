@@ -139,3 +139,18 @@ This diagram shows the flow of data in the app, from the client's HTTP requests 
 </p>
 
 This diagram shows the flow of data in the search page, where the JS code fetches data from the API endpoint `/filter_teams` and populates the DOM.
+
+## Background
+
+This project was developed as part of the ALX Software Engineering program, specifically as a portfolio project for the Foundations section of the program. The aim of this project was to apply the skills and knowledge gained during the previous 9-month to learn the fundamentals of software engineering.
+
+Prior to the program, the idea for this application had been in mind for a while, but lacked the necessary skills and knowledge to bring it to life. The program started with the basics of programming with no prior knowledge needed and gradually built up to more advanced topics such as web development, databases, and more. Throughout the program, a wide range of technologies and tools were covered, including Python, Flask, MySQL, SQLAlchemy, HTML/CSS, etc.
+
+With the skills and knowledge gained from the program, this web application was developed from start to finish, covering all aspects of the development process including planning, design, implementation, testing, and deployment (Although the app is not live right now). The application serves as a showcase of the skills and knowledge gained during the program, and demonstrates the ability to develop a fully functional web application using industry-standard technologies and best practices.
+
+## Acknowledgement
+This project was made possible thanks to the following contributors: <br>
+[Saad Out](https://github.com/saad-out) <br>
+[Yusuf Yusuf](https://github.com/koredeycode)
+
+We would like to thank the ALX community program for providing us with the opportunity to learn and grow our skills in software engineering. The knowledge and experience we gained during the program was invaluable and will stay with us for years to come.
