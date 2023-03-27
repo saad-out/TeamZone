@@ -113,3 +113,29 @@ Alternatively, you could use SQLite instead of MySQL. In this case, you can skip
 self.__engine = create_engine('sqlite:///site.db')
 ```
 This will create a local SQLite database file named `site.db` in the project directory, and the app will use it instead of a MySQL database. Keep in mind that SQLite has some limitations compared to MySQL, such as concurrency and scalability, so make sure it fits your needs before choosing it as a database solution.
+
+## Architecture
+
+### Pages Flow Diagram
+
+<p align="center">
+  <img src="https://github.com/saad-out/TeamZone/blob/main/web/static/images/architecture.png" style="width:80%;"/>
+</p>
+
+This diagram shows the flow of pages in the app, from the landing page to the search and filter page, and also the pages accessible to logged-in users.
+
+### Data Flow Diagram (excluding search page)
+
+<p align="center">
+  <img src="https://github.com/saad-out/TeamZone/blob/main/web/static/images/data_flow_archi.png" style="width:80%;"/>
+</p>
+
+This diagram shows the flow of data in the app, from the client's HTTP requests to the Flask views, and from the views to the data layer where data is fetched and returned to the client.
+
+### Data Flow Diagram (for search page)
+
+<p align="center">
+  <img src="https://github.com/saad-out/TeamZone/blob/main/web/static/images/Search_archi.png" style="width:80%;"/>
+</p>
+
+This diagram shows the flow of data in the search page, where the JS code fetches data from the API endpoint `/filter_teams` and populates the DOM.
