@@ -5,6 +5,7 @@
 </p>
 
 ## About 
+
 Have you ever found yourself struggling to organize a sports game with your team? Maybe you were looking for new opponents but didn't know where to start. Or perhaps you've just moved to a new city and are having trouble finding a team to join. Whatever your situation may be, TeamZone is here to help.
 
 TeamZone is a web application designed to connect local sports teams and make organizing games a breeze. Whether you're a casual player or a team manager, TeamZone has everything you need to get started. You can search and filter teams based on sport, country, city, and more, and even create your own teams and add other users as teammates. With TeamZone, finding and scheduling games has never been easier.
@@ -43,6 +44,7 @@ With TeamZone, users can easily manage their own teams. Each team has a profile 
 <p align="center">
   <img src="https://github.com/saad-out/TeamZone/blob/main/web/static/images/myteams.png" style="width:50%;"/>
 </p>
+
 
 ## Technologies Used
 ![HTML Badge](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white) ![CSS Badge](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white) ![Bootstrap Badge](https://img.shields.io/badge/Bootstrap-563D7C?style=flat&logo=bootstrap&logoColor=white) ![Python Badge](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) ![Flask Badge](https://img.shields.io/badge/Flask-2.2.3-orange.svg) ![SQLAlchemy Badge](https://img.shields.io/badge/SQLAlchemy-red?style=flat&logo=python&logoColor=white) ![MySQL Badge](https://img.shields.io/badge/MySQL-00000F?style=flat&logo=mysql&logoColor=white) 
