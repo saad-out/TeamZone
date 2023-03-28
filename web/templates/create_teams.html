@@ -11,7 +11,13 @@
 >
   <div class="col-md-12">
     <label for="teamname" class="form-label">Team Name</label>
-    <input type="text" name="teamname" class="form-control" id="teamname" />
+    <input
+      type="text"
+      name="teamname"
+      class="form-control"
+      id="teamname"
+      required
+    />
   </div>
   <div class="col-md-12">
     <label for="teambio" class="form-label">Team Bio</label>
@@ -20,23 +26,24 @@
       class="form-control"
       style="height: 100px"
       name="teambio"
+      required
     ></textarea>
   </div>
   <div class="col-md-6">
     <label for="teamcountry" class="form-label">Country</label>
-    <select id="teamcountry" class="form-select" name="country">
+    <select id="teamcountry" class="form-select" name="country" required>
       <option selected value="">Choose...</option>
     </select>
   </div>
   <div class="col-md-6">
     <label for="teamcity" class="form-label">City</label>
-    <select id="teamcity" class="form-select" name="city">
+    <select id="teamcity" class="form-select" name="city" required>
       <option selected value="">Choose...</option>
     </select>
   </div>
   <div class="col-md-12">
     <label for="teamsport" class="form-label">Sport</label>
-    <select id="teamsport" class="form-select" name="sportid">
+    <select id="teamsport" class="form-select" name="sportid" required>
       <option selected value="">Choose...</option>
       {% for sport in sports %}
       <option value="{{ sport.id }}">{{ sport.name }}</option>
@@ -48,7 +55,6 @@
   </div>
 </form>
 
-{% endblock main %} 
-{% block script %}
+{% endblock main %} {% block script %}
 <script src="{{ url_for('static', filename='scripts/create.js')}}"></script>
 {% endblock %}
