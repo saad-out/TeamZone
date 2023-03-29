@@ -17,7 +17,7 @@ def reset_request():
             flash("email doesn't exist")
             return redirect(url_for('login'))
         send_reset_email(user)
-        flash('An email has been sent with instruction to reset your password')
+        flash('An email has been sent with instruction to reset your password', 'info')
         return redirect(url_for('login'))
     return render_template('reset_request.html')
 
