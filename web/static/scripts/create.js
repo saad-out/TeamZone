@@ -28,4 +28,48 @@ $(document).ready(function () {
             $("#teamcity").prop("disabled", true);
         }
     });
+
+    // When the form is submitted, validate the data
+    $("#teamform").submit(function (event) {
+        event.preventDefault();
+
+        // get current user id from input with id current-user-id
+        var currentUserId = $("#current-user-id").val();
+        // get teamname, teamcity, teamcountry, teambio, teamsportId
+        var teamName = $("#teamname").val();
+        var teamCity = $("#teamcity").val();
+        var teamCountry = $("#teamcountry").val();
+        var teamBio = $("#teambio").val();
+        var teamSportId = $("#teamsport").val();
+
+        // make a post request to /api/v1/users/currentUserId/teams with the data type returned as JSON and the data as a JSON object using AJAX
+        $.ajax({
+            url: "http://localhost:5001/api/v1/users/" + currentUserId + "/teams",
+            type: "POST",
+            dataType: "json",
+            data: JSON.stringify({
+                name: teamName,
+                city: teamCity,
+                country: teamCountry,
+                bio: teamBio,
+                sport_id: teamSportId
+            }),
+            contentType: "application/json",
+            success: function (team) {
+                async function postData() {
+                    const response = await $.post("/flashed", { message: "Successfully created", category: "info"});
+                    window.location.href = "/myteams/" + team.id;
+                };
+                postData();                
+            },
+            error: function (data) {
+                async function postData() {
+                    const response = await $.post("/flashed", { message: "Unsuccessful team creation !", category: "error" });
+                    window.location.href = "/myteams";
+                };
+                postData();
+            }
+        });
+    });
+
 });

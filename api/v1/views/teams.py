@@ -22,6 +22,8 @@ from api.v1.views import app_views
 from models import storage
 from models.team import Team
 from models.user import User
+from models.city import City
+from models.country import Country
 
 from flask import abort, jsonify, request
 
@@ -121,13 +123,27 @@ def users_teams(user_id, team_id=None):
         if not request.is_json:
             return jsonify({"error": "Not a JSON"}), 400
         team_attributes = request.get_json()
-        for attribute in ["name", "city_id", "sport_id"]:
+        for attribute in ["name", "country", "city", "sport_id", "bio"]:
             if attribute not in team_attributes:
                 return jsonify({"error": f"Missing {str(attribute)}"}), 400
-        team_attributes["leader_id"] = str(user_id)
-        new_team = Team(**team_attributes)
-        user.teams.append(new_team)
-        user.save()
+            
+        team_country = storage.query(Country, "name", team_attributes.get("country"))
+        if not team_country:
+            team_country = Country(name=team_attributes.get("country"))
+            team_country.save()
+        team_city = storage.query(City, "name", team_attributes.get("city"))
+        if not team_city:
+            team_city = City(name=team_attributes.get("city"), country_id=team_country.id)
+            team_city.save()
+
+        new_team = {
+            "name": team_attributes.get("name"),
+            "sport_id": team_attributes.get("sport_id"),
+            "city_id": team_city.id,
+            "leader_id": user_id,
+            "bio": team_attributes.get("bio")
+        }
+        new_team = Team(**new_team)
         new_team.players.append(user)
         new_team.save()
         return jsonify(new_team.to_dict()), 201

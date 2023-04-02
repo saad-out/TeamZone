@@ -11,7 +11,7 @@ from web.app import app, mail
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer
 import os
-from flask import redirect, url_for, flash, g, render_template
+from flask import redirect, url_for, flash, g, render_template, request
 
 import calendar
 
@@ -161,3 +161,21 @@ def format_datetime(dt):
     date_str = f"{day_name}, {month} {day}, {year}"
     time_str = f"{hour}:{minute:02d} {am_pm}"
     return date_str, time_str
+
+
+@app.route('/flashed', methods=['POST'])
+def flashed():
+    """
+    A view function takes flashed POST message and flashes it.
+
+    Args:
+        None.
+
+    Returns:
+        str: "OK".
+    """
+    if request.form.get('message'):
+        flash(request.form.get('message'), request.form.get('category'))
+    
+    return "OK"
+        
