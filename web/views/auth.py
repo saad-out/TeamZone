@@ -9,12 +9,14 @@ This module defines the following views:
 See the views code for more detailed information on each method and its expected input and output.
 """
 from web.app import app
+from web.views.utils import verify_recaptcha
+from models import storage
+from models.user import User
 
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required
-from models import storage
-from models.user import User
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -34,6 +36,11 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
+        recaptcha_response = request.form.get('reCAPTCHA')
+
+        if not verify_recaptcha(recaptcha_response):
+            flash('Please verify that you are not a robot.', 'error')
+            return redirect(url_for('login'))
 
         user = storage.query(User, "email", email)
         if user and check_password_hash(user.password, password):
@@ -43,7 +50,7 @@ def login():
             flash('Invalid credentials! Try again.', 'error')
             return redirect(url_for('login'))
     
-    return render_template('login.html', next=next)
+    return render_template('login.html', next=next, recaptcha_site_key=os.getenv('RECAPTCHA_SITE_KEY'))
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -61,6 +68,11 @@ def signup():
     email = request.form.get('email')
     password = request.form.get('password')
     confirm_password = request.form.get('confirm_password')
+    recaptcha_response = request.form.get('reCAPTCHA')
+
+    if not verify_recaptcha(recaptcha_response):
+        flash('Please verify that you are not a robot.', 'error')
+        return redirect(url_for('login'))
 
     if password != confirm_password:
         flash('Please use the same password in both password fields.', 'error')
