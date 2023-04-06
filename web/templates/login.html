@@ -47,6 +47,9 @@
     <!-- JS -->
     <script src="{{ url_for('static', filename='scripts/login.js') }}"></script>
 
+    <!-- reCAPTCHA js script -->
+    <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
+
     {% block style %} {% endblock style %}
   </head>
 
@@ -167,6 +170,7 @@
               <div class="pass-link">
                 <a href="{{ url_for('reset_request') }}">Forgot password?</a>
               </div>
+              <input type="hidden" id="reCAPTCHA_login" name="reCAPTCHA" value="">
               <div class="field btn">
                 <div class="btn-layer"></div>
                 <input type="submit" value="Login" />
@@ -197,6 +201,7 @@
                   minlength="5"
                 />
               </div>
+              <input type="hidden" id="reCAPTCHA_signup" name="reCAPTCHA" value="">
               <div class="field btn">
                 <div class="btn-layer"></div>
                 <input type="submit" value="Signup" />
@@ -234,6 +239,14 @@
 
     <!-- Template Main JS File -->
     <script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
-    {% block script %} {% endblock %}
+
+    <script>
+      grecaptcha.ready(function() {
+        grecaptcha.execute('{{ recaptcha_site_key }}', {action: 'submit'}).then(function(token) {
+          document.getElementById('reCAPTCHA_login').value = token;
+          document.getElementById('reCAPTCHA_signup').value = token;
+        });
+      });
+    </script>
   </body>
 </html>
