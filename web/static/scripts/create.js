@@ -56,11 +56,7 @@ $(document).ready(function () {
             }),
             contentType: "application/json",
             success: function (team) {
-                async function postData() {
-                    const response = await $.post("/flashed", { message: "Successfully created", category: "info"});
-                    window.location.href = "/myteams/" + team.id;
-                };
-                postData();                
+                window.location.href = "/myteams/" + team.id;              
             },
             error: function (data) {
                 async function postData() {
