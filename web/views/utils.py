@@ -12,8 +12,9 @@ from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer
 import os
 from flask import redirect, url_for, flash, g, render_template, request
-
 import calendar
+import requests
+
 
 def save_image(image, directory, id):
     """
@@ -179,3 +180,19 @@ def flashed():
     
     return "OK"
         
+def verify_recaptcha(response):
+    """
+    Verify that the given reCAPTCHA response is valid.
+    
+    Args:
+        response (str): A string containing the reCAPTCHA response to verify.
+
+    Returns:
+        bool: True if the response is valid, False otherwise.
+    """
+    data = {
+        'secret': os.getenv('RECAPTCHA_SECRET_KEY'),
+        'response': response
+    }
+    response = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+    return response.json().get("success")
