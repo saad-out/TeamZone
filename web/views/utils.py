@@ -11,10 +11,10 @@ from web.app import app, mail
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer
 import os
-from flask import redirect, url_for, flash, g, render_template
+from flask import redirect, url_for, flash, g, render_template, request
+import calendar
 import requests
 
-import calendar
 
 def save_image(image, directory, id):
     """
@@ -163,6 +163,23 @@ def format_datetime(dt):
     time_str = f"{hour}:{minute:02d} {am_pm}"
     return date_str, time_str
 
+
+@app.route('/flashed', methods=['POST'])
+def flashed():
+    """
+    A view function takes flashed POST message and flashes it.
+
+    Args:
+        None.
+
+    Returns:
+        str: "OK".
+    """
+    if request.form.get('message'):
+        flash(request.form.get('message'), request.form.get('category'))
+    
+    return "OK"
+        
 def verify_recaptcha(response):
     """
     Verify that the given reCAPTCHA response is valid.

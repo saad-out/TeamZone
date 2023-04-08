@@ -233,8 +233,14 @@
         ></button>
         {% endfor %}
       </div>
-      {% endif %} {% endwith %} {% endblock notifications %} {% block main %} {%
-      endblock main %} {% block sections %} {% endblock sections %}
+      {% endif %} {% endwith %} {% endblock notifications %}
+      
+      {% if current_user.is_authenticated %}
+      <input type="hidden" id="current-user-id" value="{{ current_user.id }}">
+      {% endif %}
+      {% block main %} {% endblock main %} 
+      
+      {% block sections %} {% endblock sections %}
     </main>
     <!-- End #main -->
 
