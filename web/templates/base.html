@@ -44,6 +44,11 @@
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
+    <!-- Define global variable apiUrl inside script -->
+    <script>
+      const apiUrl = "{{ 'API_URL'|getenv }}";
+    </script>
+
     {% block style %} {% endblock style %}
   </head>
 
