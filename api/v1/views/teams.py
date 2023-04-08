@@ -152,8 +152,26 @@ def users_teams(user_id, team_id=None):
         if not request.is_json:
             return jsonify({"error": "Not a JSON"}), 400
         team_attributes = request.get_json()
-        for key, value in team_attributes.items():
-            if key not in ["id", "created_at", "updated_at", "leader_id"]:
+
+        team_country = storage.query(Country, "name", team_attributes.get("country"))
+        if not team_country:
+            team_country = Country(name=team_attributes.get("country"))
+            team_country.save()
+        team_city = storage.query(City, "name", team_attributes.get("city"))
+        if not team_city:
+            team_city = City(name=team_attributes.get("city"), country_id=team_country.id)
+            team_city.save()
+        
+        updated_team = {
+            "name": team_attributes.get("name"),
+            "sport_id": team_attributes.get("sport_id"),
+            "city_id": team_city.id,
+            "image": team_attributes.get("image"),
+            "bio": team_attributes.get("bio")
+        }
+
+        for key, value in updated_team.items():
+            if value:
                 setattr(team, key, value)
         team.save()
         return jsonify(team.to_dict())
