@@ -111,7 +111,7 @@ $(document).ready(function () {
     searchResult.innerHTML = `<div class="spinner-border" style="width: 50px; height: 50px;" role="status">
                     <span class="visually-hidden">Loading...</span>
                   </div>`;
-    url = "http://127.0.0.1:5001/api/v1/filter_teams";
+    url = apiUrl + "/api/v1/filter_teams";
     returnedData = postData(url, data);
     returnedData.then((teams) => {
       console.log(teams);

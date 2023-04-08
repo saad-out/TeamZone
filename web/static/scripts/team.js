@@ -1,5 +1,6 @@
 
 $(document).ready(function () {
+
   const checkbox = document.querySelector("#reset-picture");
   const imgInput = document.querySelector("#image");
   checkbox.addEventListener("change", () => {
@@ -56,7 +57,7 @@ $(document).ready(function () {
 
       // make a put request to /api/v1/users/currentUserId/teams with the data type returned as JSON and the data as a JSON object using AJAX
       $.ajax({
-        url: "http://localhost:5001/api/v1/users/" + currentUserId + "/teams/" + currentTeamId,
+        url: apiUrl + "/api/v1/users/" + currentUserId + "/teams/" + currentTeamId,
         type: "PUT",
         dataType: "json",
         data: JSON.stringify({

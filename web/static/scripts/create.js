@@ -44,7 +44,7 @@ $(document).ready(function () {
 
         // make a post request to /api/v1/users/currentUserId/teams with the data type returned as JSON and the data as a JSON object using AJAX
         $.ajax({
-            url: "http://localhost:5001/api/v1/users/" + currentUserId + "/teams",
+            url: apiUrl + "/api/v1/users/" + currentUserId + "/teams",
             type: "POST",
             dataType: "json",
             data: JSON.stringify({

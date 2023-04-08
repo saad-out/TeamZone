@@ -47,6 +47,12 @@ app.config['MAIL_PASSWORD'] = os.environ['MAIL_PASS']
 mail = Mail(app)
 
 
+# define custom jinja filter `getenv` = os.getenv
+@app.template_filter('getenv')
+def getenv(key):
+    """Get an environment variable."""
+    return os.getenv(key)
+
 @login_manager.user_loader
 def load_user(user_id):
     """
