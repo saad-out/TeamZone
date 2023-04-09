@@ -75,37 +75,67 @@ $(document).ready(function () {
       return;
     }
     searchResult.innerHTML = `<p>Teams found (${teams.length})</p>`;
-    for (const team of teams) {
-      searchResult.innerHTML += `<div class="col-lg-12">
-  <div class="card text-center">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <img
-        src="/static/images/teams/${team.image}"
-        alt="Team Logo"
-        class="img-fluid img-thumbnail rounded-circle img-sm"
-        style="height: 50px; width: 50px"
-      /><span>${team.name}</span>
-      <div></div>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-lg-4">
-          <i class="bi bi-geo-alt-fill"></i>
-          <span>${team.city}, ${team.country}</span>
-        </div>
-        <div class="col-lg-4"></div>
-        <div class="col-lg-4">
-          <i class="bi bi-trophy-fill"></i>
-          <span>${team.sport}</span>
-        </div>
-      </div>
-      <p class="card-text">${team.bio}</p>
-      <a href="/search/${team.id}" class="btn btn-primary">Connect</a>
-    </div>
-  </div>
-</div>`;
+
+    const teamsPerPage = 10;
+    let currentPage = 0;
+    
+    function displayTeams(startIndex, endIndex) {
+      const teamSubset = teams.slice(startIndex, endIndex);
+      for (const team of teamSubset) {
+        searchResult.innerHTML += `<div class="col-lg-12">
+          <div class="card text-center">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <img
+                src="/static/images/teams/${team.image}"
+                alt="Team Logo"
+                class="img-fluid img-thumbnail rounded-circle img-sm"
+                style="height: 50px; width: 50px"
+              /><span>${team.name}</span>
+              <div></div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-4">
+                  <i class="bi bi-geo-alt-fill"></i>
+                  <span>${team.city}, ${team.country}</span>
+                </div>
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4">
+                  <i class="bi bi-trophy-fill"></i>
+                  <span>${team.sport}</span>
+                </div>
+              </div>
+              <p class="card-text">${team.bio}</p>
+              <a href="/search/${team.id}" class="btn btn-primary">Connect</a>
+            </div>
+          </div>
+        </div>`;
+      }
     }
-  }
+    
+    function loadNextPage() {
+      const startIndex = currentPage * teamsPerPage;
+      const endIndex = (currentPage + 1) * teamsPerPage;
+      if (startIndex >= teams.length) {
+        window.removeEventListener('scroll', scrollListener);
+        return;
+      }
+      displayTeams(startIndex, endIndex);
+      currentPage++;
+    }
+    
+    loadNextPage();
+    
+    const scrollListener = () => {
+      const distanceToBottom = document.documentElement.offsetHeight - (window.innerHeight + window.pageYOffset);
+      if (distanceToBottom < 500) {
+        console.log('loading next page');
+        loadNextPage();
+      }
+    };
+    
+    window.addEventListener('scroll', scrollListener);
+  }  
 
   searchBtn.addEventListener("click", () => {
     searchResult.innerHTML = `<div class="spinner-border" style="width: 50px; height: 50px;" role="status">
@@ -114,7 +144,6 @@ $(document).ready(function () {
     url = apiUrl + "/api/v1/filter_teams";
     returnedData = postData(url, data);
     returnedData.then((teams) => {
-      console.log(teams);
       populateSearch(teams);
     });
   });
