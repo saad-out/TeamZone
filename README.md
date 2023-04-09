@@ -63,56 +63,69 @@ To run the app locally for testing purposes, follow these steps:
   ```
   git clone https://github.com/saad-out/TeamZone.git
   ```
-2. Create a Python virtual environment and activate it:
+2. Create a Python [virtual environment](https://docs.python.org/3/library/venv.html) and activate it:
   ```
+  # For Unix-based Systems
   python3 -m venv venv
   source venv/bin/activate
+  
+  # For Windows Users
+  python -m venv venv
+  venv\Scripts\activate.bat
   ```
-3. Install the required packages:
+3. Step into the directory:
+  ```
+  cd TeamZone
+  ```
+4. Install the required packages:
   ```
   pip install -r requirements.txt
-  pip install mysqlclient
   ```
-4. Create the MySQL database and user by running the following command after changing the default password inside the file setup_mysql_dev.sql to a strong one:
+5. Create the MySQL database and user by running the following command (You can customize the values in `setup_mysql_dev.sql`, *USE A STRONG PASSWORD FOR THE USER*):
   ```
   cat setup_mysql_dev.sql | sudo mysql
   ```
-5. Create a `.env` file in the main directory and include the values for the following variables:
+6. Create a `.env` file in the main directory and include the values for the following variables:
   ```
+  APP_KEY=<your_flask_app_secret_key>
+  
+  MAIL_USER=<your_app_email_username>
+  MAIL_PASS=<your_app_email_password>
+  
   TZ_MYSQL_USER=<your_mysql_username>
   TZ_MYSQL_PWD=<your_mysql_password>
   TZ_MYSQL_HOST=<your_mysql_host>
   TZ_MYSQL_DB=<your_mysql_database>
+  
+  RECAPTCHA_SITE_KEY=<your_reCAPTCHA_site_key>
+  RECAPTCHA_SECRET_KEY=<your_reCAPTCHA_secret_key>
+  
+  API_URL=<api_url>
   ```
-  Optionally, you can also include the following variables if you want the forgot password feature to work using Flask-Mail:
+  Here's what each variable means:
+  
+  `APP_KEY`: Flask app secret key. You can generate one by running `python -c 'import os; print(os.urandom(16))'` and copying the output to the .env file.
+  
+  `TZ_MYSQL_USER, TZ_MYSQL_PWD, TZ_MYSQL_HOST, TZ_MYSQL_DB`: MySQL database configuration. Change these values to match your MySQL setup in `setup_mysql_dev.sql`.
+  
+  `MAIL_USER, MAIL_PASS`: Gmail account configuration. Create a Gmail account for the app and use its username and password for these variables to enable the forgot     password feature to work with Flask-Mail.
+  
+  `RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET_KEY`: Google reCAPTCHA v3 configuration. Get the keys by visiting the Google reCAPTCHA Admin Console.
+  
+  `API_URL`: The url to the API, if you're running on the default localhost port 5001, it should be `http://localhost:5001`
+  
+  
+7. Start the web and API servers by running the following commands separately in two different terminal windows from the main directory:
   ```
-  MAIL_USER=<your_email_username>
-  MAIL_PASS=<your_email_password>
-  ```
-  Otherwise, you can remove the following code from `web/app.py`:
-  ```
-  app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
-  app.config['MAIL_PORT'] = 587
-  app.config['MAIL_USE_TLS'] = True
-  app.config['MAIL_USERNAME'] = os.environ['MAIL_USER']
-  app.config['MAIL_PASSWORD'] = os.environ['MAIL_PASS']
-  mail = Mail(app)
-  ```
-6. Start the web and API servers by running the following commands separately in two different terminal windows from the main directory:
-  ```
+  # python3 OR python
   python3 -m web.app
   ```
   In a separate shell:
   ```
+  # python3 OR python
   python3 -m api.v1.app
   ```
-7. Access the web app at `http://localhost:5000` and the API at `http://localhost:5001`. The web app communicates with the API through the JavaScript code.
-
-Alternatively, you could use SQLite instead of MySQL. In this case, you can skip steps 4 and 5 of the installation process, and change the instantiation of the engine in `models/engine/storage.py` to the following:
-```
-self.__engine = create_engine('sqlite:///site.db')
-```
-This will create a local SQLite database file named `site.db` in the project directory, and the app will use it instead of a MySQL database. Keep in mind that SQLite has some limitations compared to MySQL, such as concurrency and scalability, so make sure it fits your needs before choosing it as a database solution.
+8. Access the web app at `http://localhost:5000` and the API at `http://localhost:5001`. The web app communicates with the API through the JavaScript code.
 
 ## Architecture
 
