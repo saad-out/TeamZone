@@ -105,7 +105,7 @@ $(document).ready(function () {
                   <span>${team.sport}</span>
                 </div>
               </div>
-              <p class="card-text">${team.bio}</p>
+              ${team.bio ? `<p class="card-text">${team.bio}</p>` : '<p class="card-text">No bio</p>'}
               <a href="/search/${team.id}" class="btn btn-primary">Connect</a>
             </div>
           </div>
