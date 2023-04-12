@@ -242,6 +242,8 @@
       
       {% if current_user.is_authenticated %}
       <input type="hidden" id="current-user-id" value="{{ current_user.id }}">
+      {% else %} 
+      <input type="hidden" id="current-user-id" value="0">
       {% endif %}
       {% block main %} {% endblock main %} 
       

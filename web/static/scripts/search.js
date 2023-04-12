@@ -9,7 +9,9 @@ $(document).ready(function () {
   const citiesShow = document.querySelector(".citiesShow");
   const sportsShow = document.querySelector(".sportsShow");
   const searchBtn = document.querySelector("#search-btn");
-  const searchResult = document.querySelector("#search-result");
+
+  const searchResult = $("#search-result");
+  const currentUserId = $("#current-user-id").val();
 
   checkboxes.forEach((checkbox) => {
     checkbox.addEventListener("click", (event) => {
@@ -52,102 +54,97 @@ $(document).ready(function () {
     });
   });
 
-  async function postData(url = "", data = {}) {
-    postdata = {};
-    postdata.countries = Object.keys(data.countries);
-    postdata.cities = Object.keys(data.cities);
-    postdata.sports = Object.keys(data.sports);
+  let teams = [];
+  let startIndex = 0;
+  const teamsPerPage = 10;
 
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+  // Function to send JSON post request and retrieve teams
+  function getTeams(postData) {
+    $.ajax({
+      url: apiUrl + "/api/v1/filter_teams",
+      type: "POST",
+      dataType: "json",
+      data: JSON.stringify(postData),
+      contentType: "application/json",
+      success: function (response) {
+        teams = response;
+        startIndex = 0;
+        searchResult.empty(); // Clear previous content
+        searchResult.append(`<p>Teams found (${teams.length})</p>`);
+        displayTeams();
       },
-      body: JSON.stringify(postdata),
+      error: function (data) {
+        console.log(data);
+        searchResult.empty();
+        searchResult.append(`<p>Error while fetching teams !</p>`);
+      }
     });
-
-    return response.json();
   }
 
-  function populateSearch(teams) {
-    if (teams.length == 0) {
-      searchResult.innerHTML = "<p>No result found</p>";
-      return;
-    }
-    searchResult.innerHTML = `<p>Teams found (${teams.length})</p>`;
-
-    const teamsPerPage = 10;
-    let currentPage = 0;
-    
-    function displayTeams(startIndex, endIndex) {
-      const teamSubset = teams.slice(startIndex, endIndex);
-      for (const team of teamSubset) {
-        searchResult.innerHTML += `<div class="col-lg-12">
-          <div class="card text-center">
-            <div class="card-header d-flex justify-content-between align-items-center">
-              <img
-                src="/static/images/teams/${team.image}"
-                alt="Team Logo"
-                class="img-fluid img-thumbnail rounded-circle img-sm"
-                style="height: 50px; width: 50px"
-              /><span>${team.name}</span>
-              <div></div>
+  // Function to display teams
+  function displayTeams() {
+    for (let i = startIndex; i < startIndex + teamsPerPage && i < teams.length; i++) {
+      let team = teams[i];
+      console.log(team.name + String(i));
+      searchResult.append(`<div class="col-lg-12">
+      <div class="card text-center">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <img
+            src="/static/images/teams/${team.image}"
+            alt="Team Logo"
+            class="img-fluid img-thumbnail rounded-circle img-sm"
+            style="height: 50px; width: 50px"
+          /><span>${team.name}</span>
+          <div></div>
+          ${(currentUserId == team.leader_id) ? '<i class="bi bi-award">L</i>' : ''}
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-4">
+              <i class="bi bi-geo-alt-fill"></i>
+              <span>${team.city}, ${team.country}</span>
             </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-lg-4">
-                  <i class="bi bi-geo-alt-fill"></i>
-                  <span>${team.city}, ${team.country}</span>
-                </div>
-                <div class="col-lg-4"></div>
-                <div class="col-lg-4">
-                  <i class="bi bi-trophy-fill"></i>
-                  <span>${team.sport}</span>
-                </div>
-              </div>
-              <p class="card-text">${team.bio}</p>
-              <a href="/search/${team.id}" class="btn btn-primary">Connect</a>
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+              <i class="bi bi-trophy-fill"></i>
+              <span>${team.sport}</span>
             </div>
           </div>
-        </div>`;
-      }
+          ${team.bio ? `<p class="card-text">${team.bio}</p>` : `<p class="card-text">$No bio</p>`}
+          <a href="/search/${team.id}" class="btn btn-primary">Connect</a>
+        </div>
+      </div>
+    </div>`);
     }
-    
-    function loadNextPage() {
-      const startIndex = currentPage * teamsPerPage;
-      const endIndex = (currentPage + 1) * teamsPerPage;
-      if (startIndex >= teams.length) {
-        window.removeEventListener('scroll', scrollListener);
-        return;
-      }
-      displayTeams(startIndex, endIndex);
-      currentPage++;
-    }
-    
-    loadNextPage();
-    
-    const scrollListener = () => {
-      const distanceToBottom = document.documentElement.offsetHeight - (window.innerHeight + window.pageYOffset);
-      if (distanceToBottom < 500) {
-        console.log('loading next page');
-        loadNextPage();
-      }
-    };
-    
-    window.addEventListener('scroll', scrollListener);
-  }  
+  }
 
-  searchBtn.addEventListener("click", () => {
-    searchResult.innerHTML = "";
-    searchResult.innerHTML = `<div class="spinner-border" style="width: 50px; height: 50px;" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>`;
-    url = apiUrl + "/api/v1/filter_teams";
-    returnedData = postData(url, data);
-    returnedData.then((teams) => {
-      populateSearch(teams);
-    });
+  // Function to handle scroll event
+  function handleScroll() {
+    const distanceToBottom = document.documentElement.offsetHeight - (window.innerHeight + window.pageYOffset);
+    if (distanceToBottom < 500) {
+      startIndex += teamsPerPage; // Increment startIndex
+      displayTeams(); // Display next batch of teams
+    }
+  }
+
+  searchBtn.addEventListener("click", (event) => {
+    searchResult.empty();
+    searchResult.append(`<div class="spinner-border" style="width: 50px; height: 50px;" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>`);
+
+    const filters = {};
+    filters.countries = Object.keys(data.countries);
+    filters.cities = Object.keys(data.cities);
+    filters.sports = Object.keys(data.sports);
+
+    getTeams(filters);
+
   });
+
+  // Attach scroll event handler to window
+  $(window).on('scroll', handleScroll);
+
 
   // Get the country list container and items
   var countryListContainer = $("#inner-box1");
