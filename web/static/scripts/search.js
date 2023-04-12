@@ -138,6 +138,7 @@ $(document).ready(function () {
   }  
 
   searchBtn.addEventListener("click", () => {
+    searchResult.innerHTML = "";
     searchResult.innerHTML = `<div class="spinner-border" style="width: 50px; height: 50px;" role="status">
                     <span class="visually-hidden">Loading...</span>
                   </div>`;
