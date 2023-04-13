@@ -58,12 +58,25 @@ Data storage for the application is provided by a MySQL database management syst
 Together, these technologies form a robust and reliable foundation for TeamZone, allowing for seamless integration between the frontend and backend components of the application.
 
 ## Installation and Usage Instructions
+
+### Prerequisites
+Before installing the app, please make sure you have the following prerequisites installed:
+
+*`MySQL`*: The app requires a MySQL database to store data. If you don't have MySQL installed, you can download and install it from the official MySQL website: https://www.mysql.com/downloads/
+
+*`Python`*: The app requires Python as it is build using *Flask Python Web Framework*. You can download and install Python from the official Python website: https://www.python.org/downloads/
+
+### Usage
 To run the app locally for testing purposes, follow these steps:
 1. Clone the repository to your local machine:
   ```
   git clone https://github.com/saad-out/TeamZone.git
   ```
-2. Create a Python [virtual environment](https://docs.python.org/3/library/venv.html) and activate it:
+2. Step into the directory:
+  ```
+  cd TeamZone
+  ```
+3. Create a Python [virtual environment](https://docs.python.org/3/library/venv.html) and activate it:
   ```
   # For Unix-based Systems
   python3 -m venv venv
@@ -73,17 +86,17 @@ To run the app locally for testing purposes, follow these steps:
   python -m venv venv
   venv\Scripts\activate.bat
   ```
-3. Step into the directory:
-  ```
-  cd TeamZone
-  ```
 4. Install the required packages:
   ```
   pip install -r requirements.txt
   ```
 5. Create the MySQL database and user by running the following command (You can customize the values in `setup_mysql_dev.sql`, *USE A STRONG PASSWORD FOR THE USER*):
   ```
+  # For Unix-based Systems
   cat setup_mysql_dev.sql | sudo mysql
+  
+  # For Windows Users
+  type setup_mysql_dev.sql | mysql -u root -p
   ```
 6. Create a `.env` file in the main directory and include the values for the following variables:
   ```
@@ -129,29 +142,17 @@ To run the app locally for testing purposes, follow these steps:
 
 ## Architecture
 
-### Pages Flow Diagram
+TeamZone consists of two Flask applications: a web app and an API app. The web app is responsible for rendering the user interface and handling user interactions, while the API app provides the data and functionality for the web app to interact with.
 
-<p align="center">
-  <img src="https://github.com/saad-out/TeamZone/blob/main/web/static/images/architecture.png" style="width:80%;"/>
-</p>
+The web app, built using Flask, serves as the front-end of the application and is responsible for rendering the web pages that users interact with. It utilizes JavaScript to fetch data from the API app and dynamically populate the pages with content.
 
-This diagram shows the flow of pages in the app, from the landing page to the search and filter page, and also the pages accessible to logged-in users.
+The API app, also built using Flask, serves as the back-end of the application and provides the data and functionality required by the web app. It exposes RESTful endpoints that the web app can communicate with to retrieve or modify data. The API app is designed to handle requests from the web app and provide the necessary data for the web app to render the user interface.
 
-### Data Flow Diagram (excluding search page)
-
-<p align="center">
-  <img src="https://github.com/saad-out/TeamZone/blob/main/web/static/images/data_flow_archi.png" style="width:80%;"/>
-</p>
-
-This diagram shows the flow of data in the app, from the client's HTTP requests to the Flask views, and from the views to the data layer where data is fetched and returned to the client.
-
-### Data Flow Diagram (for search page)
+It's important to note that not all features of the app require authentication. Non-logged-in users still have access to the search and filter functionality, allowing them to search and filter teams and games. However, certain features such as team creation, team management, game invites, and other functionalities are only available to logged-in users who have authenticated themselves. This approach ensures that both logged-in and non-logged-in users can benefit from the app's functionalities while maintaining appropriate access controls and security measures.
 
 <p align="center">
   <img src="https://github.com/saad-out/TeamZone/blob/main/web/static/images/Search_archi.png" style="width:80%;"/>
 </p>
-
-This diagram shows the flow of data in the search page, where the JS code fetches data from the API endpoint `/filter_teams` and populates the DOM.
 
 ## Background
 
