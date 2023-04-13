@@ -105,11 +105,16 @@ def team_info(id):
     sports = storage.all(Sport).values()
 
     if not current_user.is_authenticated:
-        edit = connect = False
+        edit = False
+        connect = True
     else:
         edit = current_user.get_id() == team.leader_id
         connect = team not in current_user.teams
-    return render_template('team.html', team=team, cities=cities,countries=countries, sports=sports, edit=edit, connect=connect)
+        if not connect:
+            flash("You are already a member of this team")
+            return redirect(url_for('edit_team', id=team.id))
+
+    return render_template('team.html', team=team, sports=sports, edit=edit, connect=connect)
 
 
 @app.route('/profile')
