@@ -58,7 +58,6 @@ $.ajax({
         });
     },
     error: function (error) {
-        console.log(error);
         // Display error loading teams
         displayteams.html(`<h2 style="text-align: center;">Error loading teams</h2>`);
     }

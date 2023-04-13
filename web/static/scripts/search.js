@@ -74,7 +74,6 @@ $(document).ready(function () {
         displayTeams();
       },
       error: function (data) {
-        console.log(data);
         searchResult.empty();
         searchResult.append(`<p>Error while fetching teams !</p>`);
       }
@@ -85,7 +84,6 @@ $(document).ready(function () {
   function displayTeams() {
     for (let i = startIndex; i < startIndex + teamsPerPage && i < teams.length; i++) {
       let team = teams[i];
-      console.log(team.name + String(i));
       searchResult.append(`<div class="col-lg-12">
       <div class="card text-center">
         <div class="card-header d-flex justify-content-between align-items-center">

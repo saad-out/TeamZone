@@ -61,5 +61,6 @@ class Team(BaseModel, Base):
         new_dict["country"] = self.city.country.name
         new_dict["sport"] = self.sport.name
         new_dict["leader"] = self.leader.name
+        new_dict["players"] = [player.name for player in self.players]
         
         return new_dict
